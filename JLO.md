@@ -69,3 +69,13 @@ Par exemple `some-name-for-this-module-path-repo = okaeli-roundprices-module`
   il faut lancer
 
       ddev composer require vendorName/moduleName
+
+## Mémo
+
+- url de l'admin : https://ddev-magento2.ddev.site/admin_y312l0
+
+## Crowdsec
+
+    ddev exec --service crowdsec cscli decisions add --ip 172.17.0.1 --duration 4h --type ban
+
+    ddev exec --service crowdsec cscli decisions delete --all
