@@ -10,6 +10,7 @@ services:
       com.ddev.approot: $DDEV_APPROOT
     environment:
       - DISABLE_AGENT=true
+      - VIRTUAL_HOST=$DDEV_HOSTNAME
       - HTTP_EXPOSE=8051:8080
       - HTTPS_EXPOSE=8052:8080
     ports:

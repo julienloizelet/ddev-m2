@@ -1,0 +1,13 @@
+version: '3.6'
+services:
+  redis:
+    image: redis:6-alpine
+    container_name: ddev-${DDEV_SITENAME}-redis
+    hostname: ${DDEV_SITENAME}-redis
+    # These labels ensure this service is discoverable by ddev.
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+  web:
+    links:
+      - redis:redis

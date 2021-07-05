@@ -1,0 +1,15 @@
+version: '3.6'
+services:
+  memcached:
+    image: memcached:1-alpine
+    container_name: ddev-${DDEV_SITENAME}-memcached
+    hostname: ${DDEV_SITENAME}-memcached
+    # These labels ensure this service is discoverable by ddev.
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    ports:
+      - "11211"
+  web:
+    links:
+      - memcached:memcached

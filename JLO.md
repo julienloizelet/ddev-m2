@@ -79,3 +79,26 @@ Par exemple `some-name-for-this-module-path-repo = okaeli-roundprices-module`
     ddev exec --service crowdsec cscli decisions add --ip 172.17.0.1 --duration 4h --type ban
 
     ddev exec --service crowdsec cscli decisions delete --all
+
+
+## Redis
+
+    ddev exec --service redis sh
+
+    redis-cli
+
+    CONFIG GET databases
+
+    INFO keyspace
+
+## Memcached
+
+@see https://lzone.de/cheat-sheet/memcached
+
+    docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ddev-ddev-magento2-memcached
+
+    telnet 172.21.0.5 11211 
+
+    stats
+
+    stats items
