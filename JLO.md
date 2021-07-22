@@ -101,8 +101,20 @@ Par exemple `some-name-for-this-module-path-repo = okaeli-roundprices-module`
 
 ## EQP coding standard 
 
-    cd /home/julien/workspace/m2-modules/eqp-coding-standard
-    vendor/bin/phpcs  --standard=Magento2 ../crowdsec-bouncer
+
+### PHPCS
+```
+ ddev exec php ./vendor/bin/phpcs  --standard=Magento2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 /var/www/html/my-own-modules/crowdsec-bouncer
+```
+
+### PHPCBF
+```
+ddev exec php ./vendor/bin/phpcbf  --standard=Magento2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 /var/www/html/my-own-modules/crowdsec-bouncer
+```
+
+## Mess detector
+
+    ddev exec php ./vendor/bin/phpmd  my-own-modules/crowdsec-bouncer text dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml
 
 ## Unit tests
 
@@ -133,7 +145,7 @@ And run the following commmand :
 Maybe you should have to delete first the `.idea/misc.xml`. 
 
 
-### Mage 2 TV clean Cache :
+## Mage 2 TV clean Cache :
 
 ddev composer require --dev mage2tv/magento-cache-clean
 
@@ -149,3 +161,24 @@ todo : You should add some alias in your `.bash_aliases` for example :
        ddev exec node  /var/www/html/vendor/mage2tv/magento-cache-clean/bin/cache-clean.js "$@"
     }
 With this alias, you just have to run `cache-clean.js --watch` in your ddev Magento 2 folder.
+
+
+## PhpStorm
+
+### Code Sniffer Magento 2 (Local)
+
+    Settings -> PHP -> Quality Tools : Php code Sniffer : Local /home/julien/workspace/ddev-magento2/vendor/bin/phpcs
+
+    Settings ->  Editor -> Inspection -> PHP -> Quality Tools -> Php code Sniffer validation -> Custom -> Magento 2
+
+Peut être faut il commenter une ligne d'erreur composer dans vendor/composer/platform_check.php
+car on travaille en local et que le composer est celui du container docker
+
+
+### X-debug
+
+    ddev xdebug on
+
+    Menu -> Start listening for PHP Debug Connections
+
+    Settings -> PHP -> Servers Configurer le serveur avec le path qui pointe vers /var/www/html
