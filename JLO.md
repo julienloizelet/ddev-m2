@@ -48,20 +48,13 @@ du default.vcl car je pense que le chemin `/pub/health_check.php` n'est pas acce
 ## Utiliser ces propres modules en local avec composer
 
 - créer un dossier `my-own-modules` à la racine des sources Magento 2
-- Avoir les sources de son module dans un répertoire en dehors du projet `/path/to/specific-module`
-- Rajouter un volume dans le service web (voir le fichier docker-compose.own-modules)
-    
-      version: '3.6'
-      services:
-      web:
-      volumes:
-      - /path/to/specific-module:/var/www/html/my-own-modules/specific-module
+- Cloner les sources de son module dans un dossier `module-name`
 
 
 - Relancer le projet `ddev stop & ddev start`
 - Rajouter le repository de type "path" dans composer 
 
-      ddev composer config repositories.some-name-for-this-module-path-repo path ./my-own-modules/specific-module/ 
+      ddev composer config repositories.some-name-for-this-module-path-repo path ./my-own-modules/module-name/ 
 
 Par exemple `some-name-for-this-module-path-repo = okaeli-roundprices-module`
 
@@ -79,6 +72,8 @@ Par exemple `some-name-for-this-module-path-repo = okaeli-roundprices-module`
     ddev exec --service crowdsec cscli decisions add --ip 172.17.0.1 --duration 4h --type ban
 
     ddev exec --service crowdsec cscli decisions delete --all
+
+    ddev exec -s crowdsec cscli bouncers add magento2-bouncer
 
 
 ## Redis
@@ -102,3 +97,55 @@ Par exemple `some-name-for-this-module-path-repo = okaeli-roundprices-module`
     stats
 
     stats items
+
+
+## EQP coding standard 
+
+    cd /home/julien/workspace/m2-modules/eqp-coding-standard
+    vendor/bin/phpcs  --standard=Magento2 ../crowdsec-bouncer
+
+## Unit tests
+
+To launch unit test, run the following command from your Magento® 2 root directory :
+
+    ddev exec php vendor/bin/phpunit -c dev/tests/unit/phpunit.xml.dist /var/www/html/vendor/crowdsec/magento2-bouncer/Test/Unit
+
+### copy/paste validation
+
+To run copy paste detector on the full project :
+
+    ddev exec php -d memory_limit=-1 vendor/bin/phpcpd --log-pmd 
+'dev/tests/static/report/phpcpd_report.xml' --names-exclude "*Test.php"  --min-lines 13  --exclude 'generated/code' 
+--exclude 'dev' /var/www/html 
+`
+
+## Dockerized Magento 2 and Phpstorm
+
+
+To generate xsd schema mapping, go to the path of Magento 2 installation directory
+
+    cd /some/path/to/the/m2/sources/
+
+And run the following commmand :
+
+    ddev exec php bin/magento dev:urn-catalog:generate .idea/misc.xml 
+
+Maybe you should have to delete first the `.idea/misc.xml`. 
+
+
+### Mage 2 TV clean Cache :
+
+ddev composer require --dev mage2tv/magento-cache-clean
+
+ddev exec php /var/www/html/vendor/mage2tv/magento-cache-clean/bin/generate-cache-clean-config.php
+
+ddev exec node  /var/www/html/vendor/mage2tv/magento-cache-clean/bin/cache-clean.js --watch
+
+
+todo : You should add some alias in your `.bash_aliases` for example :
+
+    cache-clean.js () {
+       ddev exec php /var/www/html/vendor/mage2tv/magento-cache-clean/bin/generate-cache-clean-config.php
+       ddev exec node  /var/www/html/vendor/mage2tv/magento-cache-clean/bin/cache-clean.js "$@"
+    }
+With this alias, you just have to run `cache-clean.js --watch` in your ddev Magento 2 folder.

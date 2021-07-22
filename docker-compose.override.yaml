@@ -1,7 +1,0 @@
-version: '3.6'
-services:
-  web:
-    volumes:
-      - /home/julien/workspace/m2-modules/crowdsec-bouncer:/var/www/html/my-own-modules/crowdsec-bouncer
-
-
