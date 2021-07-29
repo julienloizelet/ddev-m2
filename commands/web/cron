@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+## Description: Run Magento 2 cron on every minute
+## Usage: cron
+## Example: "ddev cron"
+
+while true
+do
+  sleep 60
+  /usr/bin/php /var/www/html/bin/magento cron:run 2>&1 | grep -v "Ran jobs by schedule" >> /var/www/html/var/log/magento.cron.log
+done

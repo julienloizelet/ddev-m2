@@ -1,6 +1,10 @@
 # Notes personnelles
 
-## Problèmes à l'installation
+
+## Installation
+
+
+### Problèmes à l'installation
 
 
 En suivant le quickstart Magento 2 disponible ici : https://ddev.readthedocs.io/en/stable/users/cli-usage/#magento-2-quickstart
@@ -78,13 +82,17 @@ Par exemple `some-name-for-this-module-path-repo = okaeli-roundprices-module`
 
 ## Redis
 
-    ddev exec --service redis sh
+    ddev exec --service redis redis-cli
 
     redis-cli
 
-    CONFIG GET databases
+    INFO keyspace  => affiche les clés et les databases concernées
 
-    INFO keyspace
+    KEYS *  => affiche les clés sauvegardées
+
+    GET key  => affiche la valeur de la clé
+
+   
 
 ## Memcached
 
@@ -96,7 +104,9 @@ Par exemple `some-name-for-this-module-path-repo = okaeli-roundprices-module`
 
     stats
 
-    stats items
+    stats items => The first number after ‘items’ is the slab id. Request a cache dump for each slab id, with a limit for the max number of keys to dump:
+
+    stats cachedump 2 100
 
 
 ## EQP coding standard 
@@ -182,3 +192,86 @@ car on travaille en local et que le composer est celui du container docker
     Menu -> Start listening for PHP Debug Connections
 
     Settings -> PHP -> Servers Configurer le serveur avec le path qui pointe vers /var/www/html
+
+
+## API
+
+### REST
+
+    ddev exec php test-rest.php
+
+après avoir crée un fichier `test-rest.php` à la racine du projet M2 avec le contenu suivant
+
+```
+<?php
+$userData = array("username" => "admin", "password" => "admin123");
+$ch = curl_init("https://ddev-magento2.ddev.site/index.php/rest/V1/integration/admin/token");
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($userData));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json", "Content-Length: " . strlen(json_encode($userData))));
+
+$token = curl_exec($ch);
+
+$ch = curl_init("https://ddev-magento2.ddev.site/index.php/rest/V1/customers/1");
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json", "Authorization: Bearer " . json_decode($token)));
+
+$result = curl_exec($ch);
+
+var_dump($result);
+
+```
+
+
+### SOAP
+
+
+    ddev exec php test-soap.php
+
+après avoir crée un fichier `test-soap.php` à la racine du projet M2 avec le contenu suivant
+
+```
+<?php
+$userData = array("username" => "admin", "password" => "admin123");
+$ch = curl_init("https://ddev-magento2.ddev.site/index.php/rest/V1/integration/admin/token");
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($userData));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json", "Content-Length: " . strlen(json_encode($userData))));
+
+$token = curl_exec($ch);
+
+$ch = curl_init("https://ddev-magento2.ddev.site/index.php/rest/V1/customers/1");
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/json", "Authorization: Bearer " . json_decode($token)));
+
+$result = curl_exec($ch);
+
+var_dump($result);
+
+```
+
+
+### Graphql 
+
+See https://www.mujahidh.com/what-is-graphql-in-magento2-3-and-how-to-access-it/ par exemple
+
+
+## Cron
+
+Dans un autre fenêtre du terminal : `ddev cron`
+
+
+## Database
+
+### Snapshot
+
+    ddev snapshot --name descriptive_name
+
+    ddev snapshot restore descriptive_name
+
+
+Example : ddev snapshot --name m242
