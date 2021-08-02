@@ -114,23 +114,23 @@ Par exemple `some-name-for-this-module-path-repo = okaeli-roundprices-module`
 
 ### PHPCS
 ```
- ddev exec php ./vendor/bin/phpcs  --standard=Magento2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 /var/www/html/my-own-modules/crowdsec-bouncer
+ ddev phpcs my-own-modules/crowdsec-bouncer
 ```
 
 ### PHPCBF
 ```
-ddev exec php ./vendor/bin/phpcbf  --standard=Magento2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 /var/www/html/my-own-modules/crowdsec-bouncer
+ddev phpcbf my-own-modules/crowdsec-bouncer
 ```
 
-## Mess detector
+### Mess detector
 
-    ddev exec php ./vendor/bin/phpmd  my-own-modules/crowdsec-bouncer text dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml
+    ddev phpmd my-own-modules/crowdsec-bouncer
 
 ## Unit tests
 
 To launch unit test, run the following command from your Magento® 2 root directory :
 
-    ddev exec php vendor/bin/phpunit -c dev/tests/unit/phpunit.xml.dist /var/www/html/vendor/crowdsec/magento2-bouncer/Test/Unit
+    ddev exec php vendor/bin/phpunit -c dev/tests/unit/phpunit.xml.dist my-own-modules/crowdsec-bouncer/Test/Unit
 
 ### copy/paste validation
 
