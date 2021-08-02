@@ -15,6 +15,8 @@ Voir ici : https://magento.stackexchange.com/q/328568/50208
 
 En rajoutant `--cleanup-database`, ça passe au bout de 2 fois.
 
+On peut aussi supprimer (si il existe), le fichier app/etc/env.php avant de lancer le composer create
+
 
 ## Debug Varnish
 
