@@ -1,4 +1,4 @@
-name: ddev-magento2
+name: magento2
 type: magento2
 docroot: pub
 php_version: "7.4"
