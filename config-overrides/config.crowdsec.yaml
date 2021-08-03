@@ -1,0 +1,5 @@
+hooks:
+  post-start:
+    - exec: cscli bouncers add magento2-bouncer -o raw > /etc/crowdsec/bouncer-keys/magento2.txt
+      service: crowdsec
+    - exec: bin/magento config:set crowdsec_bouncer/general/connection/api_key $(cat bouncer-keys/magento2.txt)

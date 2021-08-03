@@ -8,6 +8,8 @@ services:
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: $DDEV_APPROOT
+    volumes:
+      - "../bouncer-keys:/etc/crowdsec/bouncer-keys"
     environment:
       - DISABLE_AGENT=true
       - VIRTUAL_HOST=$DDEV_HOSTNAME
