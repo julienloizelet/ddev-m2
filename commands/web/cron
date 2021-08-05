@@ -6,6 +6,8 @@
 
 while true
 do
+  echo "Start: `date -u`" >> /var/www/html/var/log/magento.cron.log
+  /usr/bin/php /var/www/html/bin/magento cron:run >> /var/www/html/var/log/magento.cron.log
+  echo "End: `date -u`" >> /var/www/html/var/log/magento.cron.log
   sleep 60
-  /usr/bin/php /var/www/html/bin/magento cron:run 2>&1 | grep -v "Ran jobs by schedule" >> /var/www/html/var/log/magento.cron.log
 done

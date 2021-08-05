@@ -64,6 +64,20 @@ du default.vcl car je pense que le chemin `/pub/health_check.php` n'est pas acce
 
 Par exemple `some-name-for-this-module-path-repo = okaeli-roundprices-module`
 
+
+Pour installer le module Bouncer avec la lib php en local : 
+
+
+    ddev composer config repositories.crowdsec-bouncer path ./my-own-modules/crowdsec-bouncer/
+
+    ddev composer config repositories.crowdsec-php-lib path ./my-own-modules/crowdsec-php-lib/
+
+    ddev composer config http-basic.repo.magento.com a43a7cXXXXXX 729afc0cd0YYYYYYYYYYYYYYYYY
+
+    ddev composer require crowdsec/magento2-module-bouncer
+
+
+
 - Enfin, en supposant que le nom du package du module (defini dans son `composer.json`) est `vendorName/moduleName` 
   il faut lancer
 
@@ -113,6 +127,21 @@ Par exemple `some-name-for-this-module-path-repo = okaeli-roundprices-module`
 
 ## EQP coding standard 
 
+@see https://github.com/magento/magento-coding-standard#installation-within-a-magento-2-site
+Add this to the composer.json
+
+      "scripts": {
+      "post-install-cmd": [
+      "([ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths ../../magento/magento-coding-standard/)"
+      ],
+      "post-update-cmd": [
+      "([ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths ../../magento/magento-coding-standard/)"
+      ]
+      }
+
+Puis 
+
+ddev composer require --dev magento/magento-coding-standard
 
 ### PHPCS
 ```
