@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+## Description: Run PHPSTAN for some folder
+## Usage: phpstan folder
+## Example: "ddev phpstan my-own-modules/my-module"
+
+
+
+/usr/bin/php ./vendor/bin/phpstan analyse --level 1 --no-progress --memory-limit=4G --configuration "dev/tests/static/testsuite/Magento/Test/Php/_files/phpstan/phpstan.neon" $@
