@@ -18,6 +18,18 @@ En rajoutant `--cleanup-database`, ça passe au bout de 2 fois.
 On peut aussi supprimer (si il existe), le fichier app/etc/env.php avant de lancer le composer create
 
 
+### Ajout fixtures
+
+    ddev magento setup:performance:generate-fixtures setup/performance-toolkit/profiles/ce/small.xml
+
+
+### Ajout sample data
+
+    ddev magento sampledata:deploy
+
+    ddev magento setup:upgrade
+
+
 ## Debug Varnish
 
 - pour la config dans Magento :
