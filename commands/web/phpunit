@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+## Description: Run PHP UNIT test for some folder
+## Usage: phpunit folder
+## Example: "ddev phpunit my-own-modules/my-module/Test/Unit"
+
+/usr/bin/php vendor/bin/phpunit -c dev/tests/unit/phpunit.xml.dist $@

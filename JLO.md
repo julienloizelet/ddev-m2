@@ -1,7 +1,21 @@
 # Notes personnelles
 
 
-## Installation
+### Installation DDEV
+
+    sudo apt-get install linuxbrew-wrapper
+
+    brew tap drud/ddev && brew install ddev
+
+#### Upgrade DDEV
+
+    ddev poweroff
+
+    brew upgrade ddev
+
+
+
+## Installation Magento 2
 
 
 ### Problèmes à l'installation
