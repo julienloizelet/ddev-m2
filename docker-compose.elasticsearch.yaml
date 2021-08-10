@@ -11,7 +11,7 @@ services:
       - cluster.name=docker-cluster
       - discovery.type=single-node
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms2G -Xmx2G"
       - VIRTUAL_HOST=$DDEV_HOSTNAME
       - HTTP_EXPOSE=9200:9200
     labels:
