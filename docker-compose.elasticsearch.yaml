@@ -11,9 +11,10 @@ services:
       - cluster.name=docker-cluster
       - discovery.type=single-node
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms2G -Xmx2G"
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
       - VIRTUAL_HOST=$DDEV_HOSTNAME
       - HTTP_EXPOSE=9200:9200
+      - node.max_local_storage_nodes=3
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: $DDEV_APPROOT
@@ -26,3 +27,4 @@ services:
 
 volumes:
   elasticsearch:
+    name: "${DDEV_SITENAME}-elasticsearch"
