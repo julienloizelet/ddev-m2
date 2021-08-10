@@ -18,7 +18,6 @@ parameters:
 			- %rootDir%/../../../dev/tests/integration/framework/autoload.php
 			- %rootDir%/../../../dev/tests/api-functional/framework/autoload.php
 			- %rootDir%/../../../dev/tests/setup-integration/framework/autoload.php
-			- %rootDir%/../../../dev/tests/static/framework/Magento/PhpStan/autoload.php
 	ignoreErrors:
 	    # Ignore PHPStan\Rules\Classes\UnusedConstructorParametersRule
 		- '#Constructor of class [a-zA-Z0-9\\_]+ has an unused parameter#'
