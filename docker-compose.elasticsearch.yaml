@@ -18,6 +18,12 @@ services:
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: $DDEV_APPROOT
+      com.ddev.platform: ddev
+      com.ddev.app-type: elasticsearch
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     volumes:
       - elasticsearch:/usr/share/elasticsearch/data
       - ".:/mnt/ddev_config"
