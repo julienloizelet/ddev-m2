@@ -12,11 +12,11 @@ backend default {
 }
 
 acl purge {
-    "172.21.0.8";
-    "172.21.0.6";
+    "172.21.0.0"/24;
 }
 
 sub vcl_recv {
+
     if (req.restarts > 0) {
         set req.hash_always_miss = true;
     }
@@ -187,6 +187,12 @@ sub vcl_backend_response {
 }
 
 sub vcl_deliver {
+
+    if (resp.http.x-varnish ~ " ") {
+               set resp.http.X-EQP-Cache = "HIT";
+           } else {
+               set resp.http.X-EQP-Cache = "MISS";
+    }
     if (resp.http.X-Magento-Debug) {
         if (resp.http.x-varnish ~ " ") {
             set resp.http.X-Magento-Cache-Debug = "HIT";
