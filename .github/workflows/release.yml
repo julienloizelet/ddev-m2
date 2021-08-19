@@ -1,0 +1,72 @@
+name: Prepare Release
+# example: gh workflow run release.yml -f tag_name=v1.1.4 -f draft=false
+on:
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        default: ""
+      draft:
+        default: true
+      prerelease:
+        default: false
+
+jobs:
+  prepare-release:
+    name: Prepare release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check naming convention
+        run: |
+          VERIF=$(echo ${{ github.event.inputs.tag_name }} | grep -E "^v([0-9]{1,}\.)([0-9]{1,}\.)([0-9]{1,})$")
+          if [ ! ${VERIF} ]
+          then
+            echo "Tag name '${{ github.event.inputs.tag_name }}' does not comply with naming convention vX.Y.Z"
+            exit 1
+          fi
+
+      - name: Set version number without v
+        run: |
+          echo "VERSION_NUMBER=$(echo ${{ github.event.inputs.tag_name }} | sed 's/v//g' )" >> $GITHUB_ENV
+
+      - name: Clone sources
+        uses: actions/checkout@v2
+
+      - name: Check version ${{ env.VERSION_NUMBER }} consistency in CHANGELOG
+        run: |
+          CURRENT_DATE=$(date +'%Y-%m-%d')
+          CHANGELOG_VERSION=$(grep -E "## \[(.*)\] - $CURRENT_DATE"  CHANGELOG.md | sed 's/ //g')
+          if [[ $CHANGELOG_VERSION == "##[${{ env.VERSION_NUMBER }}]-$CURRENT_DATE" ]]
+          then
+              echo "CHANGELOG VERSION OK"
+          else
+              echo "CHANGELOG VERSION KO"
+              exit 1
+          fi
+
+      - name: Create Tag ${{ github.event.inputs.tag_name }}
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ github.token }}
+          script: |
+            github.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "refs/tags/${{ github.event.inputs.tag_name }}",
+              sha: context.sha
+            })
+
+      - name: Prepare release notes
+        run: |
+          VERSION_RELEASE_NOTES=$(awk -v ver="[${{ env.VERSION_NUMBER }}]" '/^## / { if (p) { exit }; if ($2 == ver) { p=1; next} } p && NF' CHANGELOG.md)
+          echo "$VERSION_RELEASE_NOTES" >> CHANGELOG.txt
+
+
+      - name: Create release ${{ env.VERSION_NUMBER }}
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: CHANGELOG.txt
+          name: ${{ env.VERSION_NUMBER }}
+          tag_name: ${{ github.event.inputs.tag_name }}
+          draft: ${{ github.event.inputs.draft }}
+          prerelease: ${{ github.event.inputs.prerelease }}
