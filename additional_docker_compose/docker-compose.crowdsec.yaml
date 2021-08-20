@@ -4,6 +4,8 @@ services:
     image: crowdsecurity/crowdsec:latest
     container_name: ddev-${DDEV_SITENAME}-crowdsec
     hostname: ${DDEV_SITENAME}-crowdsec
+    expose:
+      - "8080"
     # These labels ensure this service is discoverable by ddev.
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
@@ -12,8 +14,15 @@ services:
       - "../bouncer-keys:/etc/crowdsec/bouncer-keys"
     environment:
       - DISABLE_AGENT=true
+      - VIRTUAL_HOST=$DDEV_HOSTNAME
+      - HTTP_EXPOSE=8080:8080
     ports:
       - "8080"
   web:
+    links:
+      - crowdsec:crowdsec
+  playwright:
+    depends_on:
+      - crowdsec
     links:
       - crowdsec:crowdsec

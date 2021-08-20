@@ -9,6 +9,7 @@ parameters:
 		- %rootDir%/../../../dev/tests/*/tmp/*
 		- %rootDir%/../../../dev/tests/*/_generated/*
 		- %rootDir%/../../../pub/*
+		- */node_modules/*
 	autoload_directories:
 		- %rootDir%/../../../dev/tests/static/framework/tests/unit/testsuite/Magento
 		- %rootDir%/../../../dev/tests/integration/framework/tests/unit/testsuite/Magento

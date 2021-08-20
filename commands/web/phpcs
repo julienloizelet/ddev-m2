@@ -2,7 +2,7 @@
 
 ## Description: Run PHPCS for some folder
 ## Usage: phpcs folder
-## Example: "ddev phpcs my-own-modules/my-module"
+## Example: "ddev phpcs my-own-modules/my-module --ignore="*/node_modules/*""
 
 
 /usr/bin/php ./vendor/bin/phpcs  --standard=Magento2 $@

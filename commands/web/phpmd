@@ -2,7 +2,7 @@
 
 ## Description: Run PHPMD for some folder
 ## Usage: phpmd folder
-## Example: "ddev phpmd my-own-modules/my-module"
+## Example: "ddev phpmd --exclude "node_modules" my-own-modules/my-module"
 
 
 /usr/bin/php ./vendor/bin/phpmd  $@ text dev/tests/static/testsuite/Magento/Test/Php/_files/phpmd/ruleset.xml

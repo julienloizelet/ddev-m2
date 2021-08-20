@@ -1,12 +1,12 @@
 name: Prepare Release
-# example: gh workflow run release.yml -f tag_name=v1.1.4 -f draft=false
+# example: gh workflow run release.yml -f tag_name=v1.1.4 -f draft=true
 on:
   workflow_dispatch:
     inputs:
       tag_name:
         default: ""
       draft:
-        default: true
+        default: false
       prerelease:
         default: false
 
@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Check naming convention
         run: |
-          VERIF=$(echo ${{ github.event.inputs.tag_name }} | grep -E "^v([0-9]{1,}\.)([0-9]{1,}\.)([0-9]{1,})$")
+          VERIF=$(echo ${{ github.event.inputs.tag_name }} | grep -E "^v([0-9]{1,}\.)([0-9]{1,}\.)([0-9]{1,})(-(alpha|beta)\.[0-9]{1,})?$")
           if [ ! ${VERIF} ]
           then
             echo "Tag name '${{ github.event.inputs.tag_name }}' does not comply with naming convention vX.Y.Z"

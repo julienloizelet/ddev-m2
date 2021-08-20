@@ -27,3 +27,5 @@
 # Additional docker-compose file
 /docker-compose.varnish.yml
 /docker-compose.crowdsec.yaml
+/docker-compose.playwright.yaml
+
