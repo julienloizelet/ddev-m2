@@ -12,6 +12,10 @@ The purpose of this repo is to share my Magento 2 [DDEV-Local](https://ddev.read
   - [Prepare DDEV Magento 2 environment](#prepare-ddev-magento-2-environment)
   - [Magento 2 installation](#magento-2-installation)
   - [Set up Magento 2](#set-up-magento-2)
+- [Usage](#usage)
+  - [Test your own module](#test-your-own-module)
+    - [Static tests](#static-tests)
+    - [Unit tests](#unit-tests)
   - [Cron](#cron)
 - [License](#license)
 
