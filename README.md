@@ -17,6 +17,8 @@ The purpose of this repo is to share my Magento 2 [DDEV-Local](https://ddev.read
     - [Static tests](#static-tests)
     - [Unit tests](#unit-tests)
   - [Cron](#cron)
+  - [Varnish](#varnish)
+    - [Varnish debug](#varnish-debug)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
