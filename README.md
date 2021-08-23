@@ -167,10 +167,12 @@ The `.ddev/varnish/default.vcl` will be used but, for consistency, you can also 
 ```
 ddev magento config:set system/full_page_cache/varnish/backend_host web \
 ddev magento config:set system/full_page_cache/varnish/backend_port 80 \
-ddev magento config:set system/full_page_cache/varnish/access_list web
+ddev magento config:set system/full_page_cache/varnish/access_list 172.21.0.0
 ```
 
-For information, I removed the following part of the generated vcl file : 
+For information, here are the differences between the back office generated `default.vcl` and the `default.vcl` I use: 
+
+- I removed the following part: 
 
 ```
  .probe = {
@@ -182,11 +184,21 @@ For information, I removed the following part of the generated vcl file :
     }
 ```
 
-and I modified the ACL list to allow all IPs of the network:
+- I modified the ACL list to allow all IPs of the network:
 
 ```
 acl purge {
     "172.21.0.0"/24;
+}
+```
+
+- I added this part for Marketplace EQP Varnish test simulation: 
+
+```
+if (resp.http.x-varnish ~ " ") {
+           set resp.http.X-EQP-Cache = "HIT";
+       } else {
+           set resp.http.X-EQP-Cache = "MISS";
 }
 ```
 
@@ -205,6 +217,18 @@ And then, from another terminal, flush the cache :
 ddev magento cache:flush
 ```
 
+You should see in the log the following content: 
+
+```
+VCL_call       RECV
+VCL_acl        MATCH purge "172.21.0.0"/24
+VCL_return     synth
+VCL_call       HASH
+VCL_return     lookup
+RespProtocol   HTTP/1.1
+RespStatus     200
+RespReason     Purged
+```
 
 ## License
 
