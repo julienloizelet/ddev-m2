@@ -25,7 +25,7 @@
 !/README.md
 
 # Additional docker-compose file
-/docker-compose.varnish.yml
+/docker-compose.varnish.yaml
 /docker-compose.crowdsec.yaml
 /docker-compose.playwright.yaml
 

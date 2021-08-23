@@ -4,8 +4,6 @@ services:
     image: crowdsecurity/crowdsec:latest
     container_name: ddev-${DDEV_SITENAME}-crowdsec
     hostname: ${DDEV_SITENAME}-crowdsec
-    expose:
-      - "8080"
     # These labels ensure this service is discoverable by ddev.
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
