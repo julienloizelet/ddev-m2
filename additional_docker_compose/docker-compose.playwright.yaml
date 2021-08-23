@@ -16,7 +16,7 @@ services:
       - redis
       - memcached
     volumes:
-      - ../my-own-modules:/my-own-modules:rw
+      - ../:/var/www/html:rw
     external_links:
       - ddev-router:${DDEV_HOSTNAME}
     command: tail -F anything
