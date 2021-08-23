@@ -144,6 +144,66 @@ a new terminal:
      ddev cron
 
 
+You should find a `var/log/magento.cron.log` for debug.
+
+### Varnish
+
+First, you should configure your Magento 2 instance to use Varnish as cache: 
+
+```
+ddev magento config:set system/full_page_cache/caching_application 2
+```
+
+Then, you can add the specific docker-compose file for Varnish and restart:
+
+```
+cp .ddev/additional_docker_compose/docker-compose.varnish.yml .ddev/docker-compose.varnish.yml
+ddev restart
+```
+
+The `.ddev/varnish/default.vcl` will be used but, for consistency, you can also set the following configuration: 
+```
+ddev magento config:set system/full_page_cache/varnish/backend_host web \
+ddev magento config:set system/full_page_cache/varnish/backend_port 80 \
+ddev magento config:set system/full_page_cache/varnish/access_list web
+```
+
+For information, I removed the following part of the generated vcl file : 
+
+```
+ .probe = {
+    .url = "/pub/health_check.php";
+    .timeout = 2s;
+    .interval = 5s;
+    .window = 10;
+    .threshold = 5;
+    }
+```
+
+and I modified the ACL list to allow all IPs of the network:
+
+```
+acl purge {
+    "172.21.0.0"/24;
+}
+```
+
+
+#### Varnish debug
+
+To see if purge works, you can do : 
+
+```
+ddev exec -s varnish varnishlog -g request -q \'ReqMethod eq "PURGE"\'
+```
+
+And then, from another terminal, flush the cache :
+
+```
+ddev magento cache:flush
+```
+
+
 ## License
 
 [MIT](LICENSE)
