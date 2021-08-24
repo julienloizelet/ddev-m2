@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+## Description: Reload VCL config
+## Usage: reload-vcl
+## Example: "ddev reload-vcl"
+
+
+HANDLE=varnish-cfg-$RANDOM ; \
+  varnishadm vcl.load $HANDLE /etc/varnish/default.vcl && \
+  varnishadm vcl.use $HANDLE

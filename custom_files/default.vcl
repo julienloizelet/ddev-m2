@@ -12,7 +12,7 @@ backend default {
 }
 
 acl purge {
-    "172.21.0.0"/24;
+    "localhost";
 }
 
 sub vcl_recv {

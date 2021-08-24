@@ -156,19 +156,21 @@ First, you should configure your Magento 2 instance to use Varnish as cache:
 ddev magento config:set system/full_page_cache/caching_application 2
 ```
 
-Then, you can add the specific docker-compose file for Varnish and restart:
+Then, you can add specific files for Varnish and restart:
 
 ```
 cp .ddev/additional_docker_compose/docker-compose.varnish.yml .ddev/docker-compose.varnish.yml
+cp .ddev/custom_files/default.vcl .ddev/varnish/default.vcl
 ddev restart
 ```
 
-The `.ddev/varnish/default.vcl` will be used but, for consistency, you can also set the following configuration: 
+Finally, we need to change the ACL part for purge process by replacing `localhost` with your `ddev-router` IP:
+
 ```
-ddev magento config:set system/full_page_cache/varnish/backend_host web \
-ddev magento config:set system/full_page_cache/varnish/backend_port 80 \
-ddev magento config:set system/full_page_cache/varnish/access_list 172.21.0.0
+ddev change-default-acl $(ddev find-ip ddev-router)
+ddev reload-vcl
 ```
+
 
 For information, here are the differences between the back office generated `default.vcl` and the `default.vcl` I use: 
 
@@ -184,13 +186,6 @@ For information, here are the differences between the back office generated `def
     }
 ```
 
-- I modified the ACL list to allow all IPs of the network:
-
-```
-acl purge {
-    "172.21.0.0"/24;
-}
-```
 
 - I added this part for Marketplace EQP Varnish test simulation: 
 
@@ -221,7 +216,7 @@ You should see in the log the following content:
 
 ```
 VCL_call       RECV
-VCL_acl        MATCH purge "172.21.0.0"/24
+VCL_acl        MATCH purge "your-ddev-router-ip"
 VCL_return     synth
 VCL_call       HASH
 VCL_return     lookup

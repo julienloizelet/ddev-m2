@@ -2,7 +2,7 @@
 
 ## Description: Find IP of a container
 ## Usage: find-ip serviceName
-## Example: "ddev find-ip memcached
+## Example: "ddev find-ip memcached"
 
 
 # Mandatory Tools
