@@ -5,12 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
-## [1.2.0] - 2021-08-24
+## [1.2.0] - 2021-08-25
 
 ### Added
-- Add `reload-vcl` and `change-default-acl` varnish command
+- Add `reload-vcl` and `replace-acl` varnish command
 ### Changed
-- Change Varnish usage
+- Modify Varnish usage and update README
 
 
 ## [1.1.1] - 2021-08-23

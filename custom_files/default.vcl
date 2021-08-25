@@ -12,7 +12,7 @@ backend default {
 }
 
 acl purge {
-    "localhost";
+    "localhost";//REPLACE_WITH_SOME_IP
 }
 
 sub vcl_recv {

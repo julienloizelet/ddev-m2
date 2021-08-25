@@ -164,10 +164,10 @@ cp .ddev/custom_files/default.vcl .ddev/varnish/default.vcl
 ddev restart
 ```
 
-Finally, we need to change the ACL part for purge process by replacing `localhost` with your `ddev-router` IP:
+Finally, we need to change the ACL part for purge process:
 
 ```
-ddev change-default-acl $(ddev find-ip ddev-router)
+ddev replace-acl $(ddev find-ip ddev-router)
 ddev reload-vcl
 ```
 

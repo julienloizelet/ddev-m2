@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-## Description: Change localhost ACL with some IP
-## Usage: change-default-acl IP
-## Example: "ddev change-default-acl 172.21.0.12"
-
-
-sed -i -e "s/\"localhost\";$/\"$@\";/g" /etc/varnish/default.vcl

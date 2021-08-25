@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+## Description: Replace ACL with some IP
+## Usage: replace-acl IP
+## Example: "ddev replace-acl 172.21.0.12"
+
+
+sed -i -e "s/\".*\";\/\/REPLACE_WITH_SOME_IP$/\"$@\";\/\/REPLACE_WITH_SOME_IP/g" /etc/varnish/default.vcl
