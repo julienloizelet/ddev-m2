@@ -19,8 +19,3 @@ services:
   web:
     links:
       - crowdsec:crowdsec
-  playwright:
-    depends_on:
-      - crowdsec
-    links:
-      - crowdsec:crowdsec

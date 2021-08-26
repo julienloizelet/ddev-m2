@@ -15,8 +15,11 @@ services:
       - db
       - redis
       - memcached
+      - crowdsec
     volumes:
       - ../:/var/www/html:rw
     external_links:
       - ddev-router:${DDEV_HOSTNAME}
+    links:
+      - crowdsec:crowdsec
     command: tail -F anything
