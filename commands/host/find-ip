@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-## Description: Find IP of a container
+## Description: Find IP of a container or host
 ## Usage: find-ip serviceName
 ## Example: "ddev find-ip memcached"
 
@@ -20,4 +20,10 @@ then
     CONTAINER_NAME=ddev-router
 fi
 
-$DOCKER inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'  $CONTAINER_NAME
+
+if [ "$@" == "host" ];
+then
+   $DOCKER network inspect -f '{{range .IPAM.Config}}{{.Gateway}}{{end}}'  ddev_default
+else
+   $DOCKER inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'  $CONTAINER_NAME
+fi

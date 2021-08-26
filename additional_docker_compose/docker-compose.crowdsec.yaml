@@ -10,6 +10,7 @@ services:
       com.ddev.approot: $DDEV_APPROOT
     volumes:
       - "../bouncer-keys:/etc/crowdsec/bouncer-keys"
+      - ".:/mnt/ddev_config"
     environment:
       - DISABLE_AGENT=true
       - VIRTUAL_HOST=$DDEV_HOSTNAME

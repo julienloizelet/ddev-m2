@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+## Description: Find IP of a container or host
+## Usage: get-bouncer-key bouncerName
+## Example: "ddev get-bouncer-key magento2"
+
+
+BOUNCER_NAME=$@
+
+cat /etc/crowdsec/bouncer-keys/$BOUNCER_NAME.txt
