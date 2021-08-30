@@ -5,9 +5,12 @@
 ## Example: "ddev crowdsec-config"
 
 BOUNCER_KEY=$(ddev create-bouncer magento2 | sed 's/\r$//')
+API_URL="http://crowdsec:8080"
 echo "Bouncer created"
 echo "Now setting ${BOUNCER_KEY} as CrowdSec_Bouncer Api key"
 ddev exec bin/magento config:set crowdsec_bouncer/general/connection/api_key ${BOUNCER_KEY}
+echo "Now setting ${API_URL} as CrowdSec_Bouncer Api url"
+ddev exec bin/magento config:set crowdsec_bouncer/general/connection/api_url ${API_URL}
 ddev create-watcher
 echo "Watcher created"
 exit 0
