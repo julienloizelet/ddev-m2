@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+
+## Description: Create a watcher
+## Usage: create-watcher login password
+## Example: "ddev create-watcher watcherLogin watcherPassword"
+
+
+LOGIN=${1:-watcherLogin}
+PASSWORD=${1:-watcherPassword}
+
+
+EXIST=$(cscli machines list -o raw | { grep "${LOGIN}" || true; })
+
+
+if [ $EXIST ];
+then
+    cscli machines delete $LOGIN -o raw
+fi
+
+cscli machines add $LOGIN --password $PASSWORD -o raw
+exit 0

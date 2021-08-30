@@ -143,16 +143,9 @@ You can also check unit tests: `ddev phpunit my-own-modules/yourVendorName-yourM
 If you want to simulate Magento 2 cron, run the following command in
 a new terminal:
 
-     ddev cron start
+     ddev cron
 
 To stop the cron, you have to close your terminal.
-
-If you want to stay in the current terminal, you can run 
-
-    ddev cron start &
-
-And you should have to stop the process later by running `ddev cron stop`
-
 
 You should find a `var/log/magento.cron.log` for debug.
 

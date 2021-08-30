@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+## Description: Configure CrowdSec and CrowdSec Bouncer
+## Usage: crowdsec-config
+## Example: "ddev crowdsec-config"
+
+BOUNCER_KEY=$(ddev create-bouncer magento2 | sed 's/\r$//')
+echo "Bouncer created"
+echo "Now setting ${BOUNCER_KEY} as CrowdSec_Bouncer Api key"
+ddev exec bin/magento config:set crowdsec_bouncer/general/connection/api_key ${BOUNCER_KEY}
+ddev create-watcher
+echo "Watcher created"
+exit 0

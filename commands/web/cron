@@ -2,52 +2,12 @@
 
 ## Description: Run Magento 2 cron on every minute
 ## Usage: cron command
-## Example: "ddev cron start"
+## Example: "ddev cron"
 
-COMMAND=${1:-start}
-
-case $COMMAND in
-  "start")
-    echo "Starting Magento 2 Cron"
-    ;;
-
-  "stop")
-    echo "Stopping Magento 2 Cron"
-    ;;
-
-  *)
-    echo "Unknown param '${COMMAND}'"
-    echo "## Usage: cron command"
-    exit 1
-    ;;
-esac
-
-if [ "${COMMAND}" = "start" ]
-then
-    echo $$ > /var/www/html/var/log/magento.cron.pid
-    echo "START cron process with PID $$: `date -u`" >> /var/www/html/var/log/magento.cron.log
-    while true
-    do
-      echo "Start: `date -u`" >> /var/www/html/var/log/magento.cron.log
-      /usr/bin/php /var/www/html/bin/magento cron:run >> /var/www/html/var/log/magento.cron.log
-      echo "End: `date -u`" >> /var/www/html/var/log/magento.cron.log
-      sleep 60
-    done
-else
-    PIDFILE=/var/www/html/var/log/magento.cron.pid
-    if test -f "$PIDFILE"; then
-        OLDPID=$(cat /var/www/html/var/log/magento.cron.pid)
-        if ps -p $OLDPID > /dev/null;
-        then
-           echo "$OLDPID is running"
-           kill $OLDPID &&
-           echo "$OLDPID has been killed" &&
-           echo "STOP cron process (PID $OLDPID): `date -u`" >> /var/www/html/var/log/magento.cron.log
-        fi
-        rm $PIDFILE
-        exit 0
-    else
-      echo "$PIDFILE does not exist: nothing to stop"
-      exit 0
-    fi
-fi
+while true
+do
+  echo "Start: `date -u`" >> /var/www/html/var/log/magento.cron.log
+  /usr/bin/php /var/www/html/bin/magento cron:run >> /var/www/html/var/log/magento.cron.log
+  echo "End: `date -u`" >> /var/www/html/var/log/magento.cron.log
+  sleep 60
+done

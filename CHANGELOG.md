@@ -5,6 +5,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+
+## [1.3.0] - 2021-08-30
+
+### Added
+- Add `create-bouncer` and `create-watcher` command for `crowdsec` service
+- Add `crowdsec-config` command for host: it replaces the removed post-start hook below and have to be run manually
+
+### Changed
+- Remove `start` and `stop` parameter for `cron` command as it seems quite useless and overcomplicated 
+- Remove `crowdsec` post-start hook as hook are not merged
+- Remove `get-bouncer-key` command and associated volume.
+
 ## [1.2.2] - 2021-08-27
 
 ### Changed

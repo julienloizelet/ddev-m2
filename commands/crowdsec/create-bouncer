@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+## Description: Create a bouncer and return bouncer key
+## Usage: create-bouncer bouncerName
+## Example: "ddev create-bouncer magento2"
+
+
+BOUNCER_NAME=${1:-magento2}
+
+EXIST=$(cscli bouncers list -o raw | { grep "${BOUNCER_NAME}" || true; })
+
+
+if [ $EXIST ];
+then
+    cscli bouncers delete $BOUNCER_NAME -o raw
+fi
+
+echo $(cscli bouncers add $BOUNCER_NAME -o raw | sed 's/\r//g')
+exit 0
