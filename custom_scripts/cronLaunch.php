@@ -16,10 +16,8 @@ if (php_sapi_name() !== 'cli' && isset($_GET['job'])) {
     define('CRONJOBCLASS', $_GET['job']);
 } elseif (php_sapi_name() !== 'cli') {
     die('Please add the class of the cron job you want to execute as a job parameter (?job=Vendor\Module\Class)');
-} elseif (!isset($argv[1])) {
-    die('Please add the class of the cron job you want to execute enclosed IN DOUBLE QUOTES as a parameter.' . PHP_EOL);
 } else {
-    define('CRONJOBCLASS', $argv[1]);
+    die('Please do not use this script with CLI. You may use Magerun instead.' . PHP_EOL);
 }
 
 class CronRunner extends \Magento\Framework\App\Http
