@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
+## [1.3.1] - 2021-09-02
+
+### Added
+- Add `cronLaunch.php` script to launch specific cron job from browser (for end-to-end playwright test purpose)
+
 ## [1.3.0] - 2021-08-30
 
 ### Added
