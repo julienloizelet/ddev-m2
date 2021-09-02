@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+## Description: Add launchCron.php file in web container (/var/www/html/pub)
+## Usage: cp-launch-cron
+## Example: "ddev cp-launch-cron"
+
+
+# Mandatory Tools
+DOCKER="docker"
+if [ -z "$DOCKER" ];
+then
+    echo "'docker' was not found on your system." >&2
+    exit 1
+fi
+
+CURRENTDIR=${PWD##*/}
+
+if [ $CURRENTDIR != ".ddev" ];
+then
+    echo "You must be in the .ddev directory to run this script" >&2
+    exit 1
+fi
+
+
+CONTAINER_NAME=ddev-${DDEV_SITENAME}-web
+
+$DOCKER  cp ./custom_scripts/cronLaunch.php $CONTAINER_NAME:/var/www/html/pub/cronLaunch.php
