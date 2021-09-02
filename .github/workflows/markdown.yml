@@ -1,0 +1,37 @@
+on:
+  workflow_dispatch:
+
+name: Markdown files test and update
+jobs:
+  markdown-test-and-update:
+    name: Markdown files test and update
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Clone sources
+        uses: actions/checkout@v2
+        with:
+          path: sources
+
+      - name: Lauch localhost server
+        run: |
+          sudo npm install --global http-server
+          http-server ./sources &
+
+      - name: Set up Ruby 2.6
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.6
+
+      - name: Check links in Mardown files
+        run: |
+          gem install awesome_bot
+          cd sources
+          awesome_bot README.md --skip-save-results --base-url http://localhost:8080/ --white-list repo.magento.com,ddev.site
+
+      - uses: technote-space/toc-generator@v4
+        with:
+          MAX_HEADER_LEVEL: 5
+          COMMIT_NAME: Okaeli Dev Bot
+          TARGET_PATHS: 'README.md'
+          CHECK_ONLY_DEFAULT_BRANCH: true
