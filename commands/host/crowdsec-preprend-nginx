@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+## Description: Add or Remove a CrowdSec prepend php script to nginx conf
+## Usage: crowdsec-prepend-nginx <action>
+## <action>: add or remove (add by default)
+## Example: "ddev crowdsec-prepend-nginx"
+
+
+CURRENT_DIR=${PWD##*/}
+
+if [ $CURRENT_DIR != ".ddev" ];
+then
+  echo "This script must be run in a .ddev directory"
+  exit 1
+fi
+
+
+ACTION=${1:-add}
+
+
+case $ACTION in
+  add)
+    EXIST=$(grep "fastcgi_param PHP_VALUE \"auto_prepend_file" nginx_full/nginx-site.conf)
+    if [[ ! $EXIST ]];
+    then
+        sed -i 's/^\(.*\)fastcgi_param MAGE_RUN_TYPE $mage_run_type;/\1fastcgi_param MAGE_RUN_TYPE $mage_run_type;\r\1fastcgi_param PHP_VALUE "auto_prepend_file=\/var\/www\/html\/vendor\/crowdsec\/magento2-module-bouncer\/Standalone.php";/' nginx_full/nginx-site.conf
+    else
+       echo "Prepend directive already exists"
+       exit 0
+    fi
+    ;;
+  remove)
+    EXIST=$(grep "fastcgi_param PHP_VALUE \"auto_prepend_file" nginx_full/nginx-site.conf)
+    if [[ $EXIST ]];
+    then
+        sed -i 's/fastcgi_param PHP_VALUE "auto_prepend_file=\(.*\)$//' nginx_full/nginx-site.conf
+    else
+       echo "Prepend directive does not exist"
+       exit 0
+    fi
+
+    ;;
+  *)
+    echo "Undefined action: ${ACTION}"
+    ;;
+esac
+
+
+
+ddev exec nginx -s reload
+
