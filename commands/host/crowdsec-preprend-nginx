@@ -23,7 +23,7 @@ case $ACTION in
     EXIST=$(grep "fastcgi_param PHP_VALUE \"auto_prepend_file" nginx_full/nginx-site.conf)
     if [[ ! $EXIST ]];
     then
-        sed -i 's/^\(.*\)fastcgi_param MAGE_RUN_TYPE $mage_run_type;/\1fastcgi_param MAGE_RUN_TYPE $mage_run_type;\r\1fastcgi_param PHP_VALUE "auto_prepend_file=\/var\/www\/html\/vendor\/crowdsec\/magento2-module-bouncer\/Standalone.php";/' nginx_full/nginx-site.conf
+        sed -i 's/^\(.*\)fastcgi_param MAGE_RUN_TYPE $mage_run_type;/\1fastcgi_param MAGE_RUN_TYPE $mage_run_type;\r\1fastcgi_param PHP_VALUE "auto_prepend_file=\/var\/www\/html\/vendor\/crowdsec\/magento2-module-bouncer\/prepend.php";/' nginx_full/nginx-site.conf
     else
        echo "Prepend directive already exists"
        exit 0
