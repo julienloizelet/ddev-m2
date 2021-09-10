@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ## Description: Add or Remove a CrowdSec prepend php script to nginx conf
-## Usage: crowdsec-prepend-nginx <action>
+## Usage: crowdsec-prepend-nginx
 ## <action>: add or remove (add by default)
 ## Example: "ddev crowdsec-prepend-nginx"
 
@@ -20,25 +20,14 @@ ACTION=${1:-add}
 
 case $ACTION in
   add)
-    EXIST=$(grep "fastcgi_param PHP_VALUE \"auto_prepend_file" nginx_full/nginx-site.conf)
-    if [[ ! $EXIST ]];
-    then
-        sed -i 's/^\(.*\)fastcgi_param MAGE_RUN_TYPE $mage_run_type;/\1fastcgi_param MAGE_RUN_TYPE $mage_run_type;\r\1fastcgi_param PHP_VALUE "auto_prepend_file=\/var\/www\/html\/vendor\/crowdsec\/magento2-module-bouncer\/prepend.php";/' nginx_full/nginx-site.conf
-    else
-       echo "Prepend directive already exists"
-       exit 0
-    fi
+    mv nginx_full/nginx-site.conf nginx_full/nginx-site.conf.backup
+    cp custom_files/crowdsec-prepend-nginx-site.conf nginx_full/nginx-site.conf
+    ddev exec nginx -s reload
+    rm nginx_full/nginx-site.conf
+    mv nginx_full/nginx-site.conf.backup nginx_full/nginx-site.conf
     ;;
   remove)
-    EXIST=$(grep "fastcgi_param PHP_VALUE \"auto_prepend_file" nginx_full/nginx-site.conf)
-    if [[ $EXIST ]];
-    then
-        sed -i 's/fastcgi_param PHP_VALUE "auto_prepend_file=\(.*\)$//' nginx_full/nginx-site.conf
-    else
-       echo "Prepend directive does not exist"
-       exit 0
-    fi
-
+    ddev exec nginx -s reload
     ;;
   *)
     echo "Undefined action: ${ACTION}"
@@ -47,5 +36,5 @@ esac
 
 
 
-ddev exec nginx -s reload
+
 
