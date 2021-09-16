@@ -32,3 +32,6 @@
 # Varnish
 /varnish/default.vcl
 
+# PHP
+/php/*.ini
+
