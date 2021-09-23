@@ -175,11 +175,12 @@ ddev reload-vcl
 
 For information, here are the differences between the back office generated `default.vcl` and the `default.vcl` I use: 
 
-- I removed the following part: 
+- I changed the probe url from `"/pub/health_check.php"` to `"/health_check.php"` as explained in the
+[official documentation](https://devdocs.magento.com/guides/v2.4/config-guide/varnish/config-varnish-advanced.html):
 
 ```
  .probe = {
-    .url = "/pub/health_check.php";
+    .url = "/health_check.php";
     .timeout = 2s;
     .interval = 5s;
     .window = 10;
@@ -188,7 +189,7 @@ For information, here are the differences between the back office generated `def
 ```
 
 
-- I added this part for Marketplace EQP Varnish test simulation: 
+- I added this part for Marketplace EQP Varnish test simulation as explained in the [official documentation](https://devdocs.magento.com/marketplace/sellers/installation-and-varnish-tests.html#additional-magento-configuration):
 
 ```
 if (resp.http.x-varnish ~ " ") {
