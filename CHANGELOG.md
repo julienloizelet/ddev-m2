@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [1.3.4] - 2021-09-24
+
+### Added
+- Add PHP `.ini` for auto prepend file
+
+### Changed
+- Modify Varnish `default.vcl` to handle probe url
+
 ## [1.3.3] - 2021-09-10
 
 ### Changed
