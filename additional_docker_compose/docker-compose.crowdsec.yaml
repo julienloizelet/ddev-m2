@@ -9,7 +9,6 @@ services:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: $DDEV_APPROOT
     volumes:
-      - "../bouncer-keys:/etc/crowdsec/bouncer-keys"
       - ".:/mnt/ddev_config"
     environment:
       - DISABLE_AGENT=true

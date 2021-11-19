@@ -6,7 +6,7 @@
 
 
 LOGIN=${1:-watcherLogin}
-PASSWORD=${1:-watcherPassword}
+PASSWORD=${2:-watcherPassword}
 
 
 EXIST=$(cscli machines list -o raw | { grep "${LOGIN}" || true; })
