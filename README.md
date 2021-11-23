@@ -109,6 +109,14 @@ You will need your Magento 2 credentials to install the source code.
 
 This should take ages.
 
+### Configure Magento 2 for local development
+
+    ddev magento config:set admin/security/password_is_forced 0
+    ddev magento config:set admin/security/password_lifetime 0
+    ddev magento module:disable Magento_TwoFactorAuth
+    ddev magento indexer:reindex
+    ddev magento c:c
+
 
 ## Usage
 
