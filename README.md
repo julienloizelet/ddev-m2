@@ -1,5 +1,7 @@
 # DDEV-Local stack for Magento 2
 
+[![Magento 2 Installation](https://github.com/julienloizelet/ddev-m2/actions/workflows/installation.yml/badge.svg?event=push)](https://github.com/julienloizelet/ddev-m2/actions/workflows/installation.yml)
+
 The purpose of this repo is to share my Magento 2 [DDEV-Local](https://ddev.readthedocs.io/en/stable/) stack.
 
 

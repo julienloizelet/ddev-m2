@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [1.4.1] - 2021-12-31
+
+### Added
+- Add `2.3.5` config
+- Add GitHub action for Magento 2 installation test 
+
+
 ## [1.4.0] - 2021-11-19
 
 ### Changed
