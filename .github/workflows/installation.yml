@@ -29,14 +29,39 @@ jobs:
                     path: .ddev
 
             -   name: Install DDEV
+                env:
+                  TMPDIR: /tmp
+                  DDEV_VERSION: v1.18.2
                 run: |
                     # @see https://ddev.readthedocs.io/en/stable/#installationupgrade-script-linux-and-macos-armarm64-and-amd64-architectures
+                    # and https://github.com/drud/ddev/blob/master/scripts/install_ddev.sh
                     sudo apt-get -qq update
                     sudo apt-get -qq -y install libnss3-tools
-                    curl -LO https://raw.githubusercontent.com/drud/ddev/master/scripts/install_ddev.sh
-                    bash install_ddev.sh
+                    FILEBASE="ddev_linux"
+                    unamearch=$(uname -m)
+                    case ${unamearch} in
+                      x86_64) ARCH="amd64";
+                      ;;
+                      aarch64) ARCH="arm64";
+                      ;;
+                      arm64) ARCH="arm64"
+                      ;;
+                      *) printf "Sorry, your machine architecture ${unamearch} is not currently supported.\n$" && exit 106
+                      ;;
+                    esac
+                    curl -fsSL "https://github.com/drud/ddev/releases/download/${{env.DDEV_VERSION}}/${FILEBASE}-${ARCH}.${{env.DDEV_VERSION}}.tar.gz" -o "${{env.TMPDIR}}/${FILEBASE}-${ARCH}.${{env.DDEV_VERSION}}.tar.gz"
+                    curl -fsSL "https://github.com/drud/ddev/releases/download/${{env.DDEV_VERSION}}/${FILEBASE}-${ARCH}.${{env.DDEV_VERSION}}.tar.gz.sha256.txt" -o "${{env.TMPDIR}}/${FILEBASE}-${ARCH}.${{env.DDEV_VERSION}}.tar.gz.sha256.txt"
+                    cd ${{env.TMPDIR}}
+                    sha256sum -c ${FILEBASE}-${ARCH}.${{env.DDEV_VERSION}}.tar.gz.sha256.txt
+                    tar -xzf ${FILEBASE}-${ARCH}.${{env.DDEV_VERSION}}.tar.gz
+                    printf "Download verified. Ready to place ddev and mkcert in your /usr/local/bin.\n"
+                    chmod +x mkcert
+                    chmod +x ddev
+                    sudo mv mkcert /usr/local/bin/
+                    sudo mv ddev /usr/local/bin/
+                    mkcert -install
+                    ddev --version
                     ddev config global --instrumentation-opt-in=false --omit-containers=dba,ddev-ssh-agent
-                    rm install_ddev.sh
 
             -   name: Set M2_VERSION_CODE env
                 # used in some directory path and conventional file naming
