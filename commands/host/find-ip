@@ -13,15 +13,17 @@ then
     exit 1
 fi
 
-CONTAINER_NAME=ddev-${DDEV_SITENAME}-$@
+SERVICE_NAME=${1:-host}
 
-if [ "$@" == "ddev-router" ];
+CONTAINER_NAME=ddev-${DDEV_SITENAME}-${SERVICE_NAME}
+
+if [ "$SERVICE_NAME" == "ddev-router" ];
 then
     CONTAINER_NAME=ddev-router
 fi
 
 
-if [ "$@" == "host" ];
+if [ "$SERVICE_NAME" == "host" ];
 then
    $DOCKER network inspect -f '{{range .IPAM.Config}}{{.Gateway}}{{end}}'  ddev_default
 else

@@ -35,10 +35,13 @@ release._
 
 Please follow the [official instructions](https://ddev.readthedocs.io/en/stable/#installation). On a Linux
 distribution, this should be as simple as
-
-    sudo apt-get install linuxbrew-wrapper
-    brew tap drud/ddev && brew install ddev
-
+```
+sudo apt-get -qq update
+sudo apt-get -qq -y install libnss3-tools
+curl -LO https://raw.githubusercontent.com/drud/ddev/master/scripts/install_ddev.sh
+bash install_ddev.sh
+rm install_ddev.sh
+```
 
 ### Prepare DDEV Magento 2 environment
 
