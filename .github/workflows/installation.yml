@@ -11,12 +11,11 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                m2-version: [ 2.2.10, 2.3.0, 2.4.3 ]
-                php-version: [ 7.2, 7.4 ]
+                m2-version: [ "2.3.0", "2.4.3" ]
+                php-version: [ "7.2", "7.3", "7.4" ]
                 exclude:
-                    - { php-version: 7.4, m2-version: 2.2.10 }
-                    - { php-version: 7.4, m2-version: 2.3.0 }
-                    - { php-version: 7.2, m2-version: 2.4.3 }
+                    - { php-version: "7.4", m2-version: "2.3.0" }
+                    - { php-version: "7.2", m2-version: "2.4.3" }
 
         name: Magento 2 Installation
         runs-on: ubuntu-latest
