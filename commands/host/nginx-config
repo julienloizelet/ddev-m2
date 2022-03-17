@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+## Description: Override the nginx conf by a specific one
+## Usage: nginx-config <conf_file>
+## <conf_file>: Relative path from the .ddev folder
+## Example: "ddev nginx-config custom_files/custom-nginx-site.conf"
+
+
+CURRENT_DIR=${PWD##*/}
+
+if [ "$CURRENT_DIR" != ".ddev" ];
+then
+  echo "This script must be run in a .ddev directory"
+  echo "We are here: ${CURRENT_DIR}"
+  exit 1
+fi
+
+
+FILEPATH=${1:-default}
+
+if [ "$FILEPATH" == "default" ];
+then
+    echo "File path is mandatory"
+    exit 1
+fi
+
+mv nginx_full/nginx-site.conf nginx_full/nginx-site.conf.backup
+cp "$FILEPATH" nginx_full/nginx-site.conf
+ddev exec nginx -s reload
+mv nginx_full/nginx-site.conf.backup nginx_full/nginx-site.conf
+echo "Nginx config has been modified"
+echo "To use the original conf, please run a ddev restart"
+
+
+
+
+
+
+
