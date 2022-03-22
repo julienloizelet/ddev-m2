@@ -33,13 +33,14 @@ release._
 
 ### DDEV-Local installation
 
-Please follow the [official instructions](https://ddev.readthedocs.io/en/stable/#installation). On a Linux
-distribution, this should be as simple as
+This project is fully compatible with DDEV 1.18.2, and it is recommended to use this specific version.
+For the DDEV installation, please follow the [official instructions](https://ddev.readthedocs.io/en/stable/#installation).
+On a Linux distribution, you can run:
 ```
 sudo apt-get -qq update
 sudo apt-get -qq -y install libnss3-tools
 curl -LO https://raw.githubusercontent.com/drud/ddev/master/scripts/install_ddev.sh
-bash install_ddev.sh
+bash install_ddev.sh v1.18.2
 rm install_ddev.sh
 ```
 
@@ -240,6 +241,30 @@ RespProtocol   HTTP/1.1
 RespStatus     200
 RespReason     Purged
 ```
+
+#### Working with Mage2TV clean-cache
+
+The Mage2TV clean-cache is a developer tool that automatically cleans the cache when necessary.
+
+```
+
+# Install
+ddev composer require --dev mage2tv/magento-cache-clean
+# In your project create the var/cache-clean-config.json by running:
+ddev exec php /var/www/html/vendor/mage2tv/magento-cache-clean/bin/generate-cache-clean-config.php
+# Run to start watching
+ddev exec node /var/www/html/vendor/mage2tv/magento-cache-clean/bin/cache-clean.js --watch
+```
+
+You should add some alias in your `.bash_aliases` for example :
+
+```
+cache-clean.js () {
+ddev exec php /var/www/html/vendor/mage2tv/magento-cache-clean/bin/generate-cache-clean-config.php
+ddev exec node /var/www/html/vendor/mage2tv/magento-cache-clean/bin/cache-clean.js "$@"
+}
+```
+With this alias, you just have to run `cache-clean.js --watch` in your Magento 2 folder.
 
 ## License
 
