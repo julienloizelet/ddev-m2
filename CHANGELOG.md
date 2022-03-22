@@ -5,6 +5,20 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [1.5.0] - 2022-03-22
+
+### Added
+- Add `nginx-config` host command to reload nginx configuration with a custom configuration file
+- Add `2.4.0` config
+- Add `phpinfo` script
+
+### Changed
+- Use a specific DDEV version (1.18.2)
+- Update `find-ip` command to handle a default value
+
+### Removed
+- Remove test for EOL Magento 2.2.x
+
 ## [1.4.1] - 2021-12-31
 
 ### Added
