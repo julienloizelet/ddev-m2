@@ -22,6 +22,7 @@ The purpose of this repo is to share my Magento 2 [DDEV-Local](https://ddev.read
   - [Cron](#cron)
   - [Varnish](#varnish)
     - [Varnish debug](#varnish-debug)
+    - [Working with Mage2TV clean-cache](#working-with-mage2tv-clean-cache)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
