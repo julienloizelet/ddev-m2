@@ -27,5 +27,5 @@ if [ "$SERVICE_NAME" == "host" ];
 then
    $DOCKER network inspect -f '{{range .IPAM.Config}}{{.Gateway}}{{end}}'  ddev_default
 else
-   $DOCKER inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'  $CONTAINER_NAME
+   $DOCKER inspect -f '{{.NetworkSettings.Networks.ddev_default.IPAddress}}'  $CONTAINER_NAME
 fi

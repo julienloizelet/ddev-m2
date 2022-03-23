@@ -6,11 +6,14 @@
 
 BOUNCER_KEY=$(ddev create-bouncer magento2 | sed 's/\r$//')
 API_URL="http://crowdsec:8080"
+PROXY_IP=$(ddev find-ip ddev-router | sed 's/\r$//')
 echo "Bouncer created"
 echo "Now setting ${BOUNCER_KEY} as CrowdSec_Bouncer Api key"
 ddev magento config:set crowdsec_bouncer/general/connection/api_key ${BOUNCER_KEY}
 echo "Now setting ${API_URL} as CrowdSec_Bouncer Api url"
 ddev magento config:set crowdsec_bouncer/general/connection/api_url ${API_URL}
+echo "Now setting ${PROXY_IP} as CrowdSec_Bouncer Trusted IP"
+ddev magento config:set crowdsec_bouncer/advanced/remediation/trust_ip_forward_list ${PROXY_IP}
 ddev create-watcher
 echo "Watcher created"
 exit 0
