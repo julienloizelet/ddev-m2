@@ -5,6 +5,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [2.0.0] - 2022-03-25
+
+### Added
+- Add `maxmind-download` web command to download MaxMind databases
+
+### Changed
+- Change DDEV compatibility by using `1.19.1` ddev version
+- Change `find-ip` command for ddev 1.19.1 compatibility
+- Change `crowdsec-config` command
+
 ## [1.5.0] - 2022-03-22
 
 ### Added

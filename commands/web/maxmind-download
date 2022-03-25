@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+## Description: Download a MaxMind database using a LICENSE KEY
+## Usage: maxmind-download license_key db_name destination
+## Example: "ddev maxmind-download Vj***4gs54 GeoLite2-Country /var/www/html"
+
+# Note that you can pass the value DEFAULT for the Licence Key to download a database hosted on github.com/julienloizelet/ddev-m2/releases/download/v2.0.0
+# There are 2 available databases by default: GeoLite2-Country and GeoLite2-City
+
+LICENSE_KEY=$1
+DB_NAME=$2
+DESTINATION=$3
+
+
+if [ $LICENSE_KEY == "DEFAULT" ];
+then
+  echo "This script will download ${DB_NAME}.tar.gz and ${DB_NAME}.tar.gz.sha256.txt from https://github.com/julienloizelet/ddev-m2/releases/download/v2.0.0"
+  curl -fL "https://github.com/julienloizelet/ddev-m2/releases/download/v2.0.0/${DB_NAME}.tar.gz" -o "${DESTINATION}/${DB_NAME}.tar.gz" &&
+  curl -fL "https://github.com/julienloizelet/ddev-m2/releases/download/v2.0.0/${DB_NAME}.tar.gz.sha256.txt" -o "${DESTINATION}/${DB_NAME}.tar.gz.sha256.txt" &&
+  exit 0
+fi
+
+# Get the last modified name
+LATEST_RELEASE=$(curl -I "https://download.maxmind.com/app/geoip_download?edition_id=${DB_NAME}&license_key=${LICENSE_KEY}&suffix=tar.gz" | tr -d '\r' | sed -En 's/(.*)filename=(.*).tar.gz/\2/p')
+
+printf '%s.tar.gz will be downloaded ' "${LATEST_RELEASE}"
+
+# Download database ans chexksum file with curl
+curl -fL "https://download.maxmind.com/app/geoip_download?edition_id=${DB_NAME}&license_key=${LICENSE_KEY}&suffix=tar.gz" -o "${DESTINATION}/${LATEST_RELEASE}.tar.gz" &&
+
+curl -fL "https://download.maxmind.com/app/geoip_download?edition_id=${DB_NAME}&license_key=${LICENSE_KEY}&suffix=tar.gz.sha256" -o "${DESTINATION}/${LATEST_RELEASE}.tar.gz.sha256.txt" &&
+
+cd "${DESTINATION}" &&
+
+#Checksum
+sha256sum -c "${LATEST_RELEASE}".tar.gz.sha256.txt &&
+
+# Extract database
+tar -zxf "${LATEST_RELEASE}".tar.gz  "${LATEST_RELEASE}"/"${DB_NAME}".mmdb &&
+
+# Create tar.gz with the db only and a simple filename (without date)
+tar -cf "${DB_NAME}".tar.gz  -C "${LATEST_RELEASE}" "${DB_NAME}".mmdb &&
+
+# Create sha256 checksum file
+sha256sum "${DB_NAME}".tar.gz > "${DB_NAME}".tar.gz.sha256.txt &&
+
+# Clean files
+rm "${LATEST_RELEASE}.tar.gz" && rm "${LATEST_RELEASE}.tar.gz.sha256.txt" && rm -rf "${LATEST_RELEASE}"
