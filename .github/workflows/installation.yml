@@ -1,8 +1,8 @@
 name: Magento 2 Installation
 on:
-    pull_request:
+    push:
         branches:
-            - main
+            - master
     workflow_dispatch:
 
 jobs:
