@@ -131,9 +131,9 @@ This should take ages.
 ### Test your own module
 
 ```
-mkdir m2-sources/my-own-modules
-mkdir m2-sources/my-own-modules/yourVendorName-yourModuleName
-cd m2-sources/my-own-modules/yourVendorName-yourModuleName 
+cd m2-sources
+mkdir -p my-own-modules/yourVendorName-yourModuleName
+cd my-own-modules/yourVendorName-yourModuleName 
 git clone git@github.com:yourGithubName/yourGithubModule.git ./
 ddev composer config repositories.yourVendorName-yourModuleName path my-own-modules/yourVendorName-yourModuleName/
 ddev composer require yourComposerModuleName:@dev

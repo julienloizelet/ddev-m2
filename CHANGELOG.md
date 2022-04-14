@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [2.1.0] - 2022-04-14
+
+### Added
+- Add `2.4.4` config
+
+### Changed
+- Build web container with memcached 3.2.0 for PHP 8.1 compatibility
+
+
 ## [2.0.0] - 2022-03-25
 
 ### Added
