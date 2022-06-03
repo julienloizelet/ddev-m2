@@ -243,7 +243,7 @@ RespStatus     200
 RespReason     Purged
 ```
 
-#### Working with Mage2TV clean-cache
+### Working with Mage2TV clean-cache
 
 The Mage2TV clean-cache is a developer tool that automatically cleans the cache when necessary.
 
