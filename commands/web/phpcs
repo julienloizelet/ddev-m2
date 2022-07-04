@@ -5,4 +5,4 @@
 ## Example: "ddev phpcs my-own-modules/my-module --ignore="*/node_modules/*""
 
 
-/usr/bin/php ./vendor/bin/phpcs  --standard=Magento2 $@
+/usr/bin/php ./vendor/bin/phpcs  --standard=Magento2 --extensions=php,phtml --error-severity=10 --ignore-annotations $@
