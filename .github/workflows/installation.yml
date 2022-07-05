@@ -78,7 +78,6 @@ jobs:
                     ls -al ${{ env.M2_VERSION_CODE }}
                     cp -r ${{ env.M2_VERSION_CODE }}/. ${{ github.workspace }}
                     rm -rf ${{ env.M2_VERSION_CODE }}
-                    ls -al ${{ github.workspace }}
                     ls -al ${{ github.workspace }}/bin
 
             -   name: Setup Magento ${{ matrix.m2-version }} with PHP ${{ matrix.php-version }}
