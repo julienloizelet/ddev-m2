@@ -10,12 +10,15 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                m2-version: [ "2.3.0", "2.4.3", "2.4.4" ]
+                m2-version: [ "2.3.0", "2.3.7", "2.4.3", "2.4.4" ]
                 php-version: [ "7.2", "7.3", "7.4", "8.1" ]
                 exclude:
                     - { php-version: "7.3", m2-version: "2.3.0" }
                     - { php-version: "7.4", m2-version: "2.3.0" }
                     - { php-version: "8.1", m2-version: "2.3.0" }
+                    - { php-version: "7.2", m2-version: "2.3.7" }
+                    - { php-version: "7.3", m2-version: "2.3.7" }
+                    - { php-version: "8.1", m2-version: "2.3.7" }
                     - { php-version: "7.2", m2-version: "2.4.3" }
                     - { php-version: "8.1", m2-version: "2.4.3" }
                     - { php-version: "7.2", m2-version: "2.4.4" }
