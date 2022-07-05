@@ -2,6 +2,9 @@ on:
   workflow_dispatch:
 
 name: Markdown files test and update
+permissions:
+  contents: write
+  pull-requests: write
 jobs:
   markdown-test-and-update:
     name: Markdown files test and update
@@ -35,3 +38,4 @@ jobs:
           COMMIT_NAME: Okaeli Dev Bot
           TARGET_PATHS: 'README.md'
           CHECK_ONLY_DEFAULT_BRANCH: true
+          CREATE_PR: true

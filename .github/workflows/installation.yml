@@ -24,6 +24,8 @@ jobs:
 
         name: Magento 2 Installation
         runs-on: ubuntu-latest
+        permissions:
+          contents: read
 
         steps:
 
