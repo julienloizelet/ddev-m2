@@ -54,11 +54,11 @@ jobs:
 
             -   name: Set ELASTIC_INSTALL_STRING env for 2.3
                 if: startsWith(matrix.m2-version, '2.3')
-                run: echo "ELASTIC_INSTALL_STRING='--timezone=America/Chicago'" >> $GITHUB_ENV
+                run: echo "ELASTIC_INSTALL_STRING=" >> $GITHUB_ENV
 
             -   name: Set ELASTIC_INSTALL_STRING env for 2.4
                 if: startsWith(matrix.m2-version, '2.4')
-                run: echo "ELASTIC_INSTALL_STRING='--elasticsearch-host=elasticsearch'" >> $GITHUB_ENV
+                run: echo "ELASTIC_INSTALL_STRING=--elasticsearch-host=elasticsearch" >> $GITHUB_ENV
 
             -   name: Start DDEV for ${{ matrix.m2-version }} with PHP ${{ matrix.php-version }}
                 run: |
