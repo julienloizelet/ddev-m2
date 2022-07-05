@@ -34,7 +34,7 @@ jobs:
 
             -   name: Install DDEV
                 env:
-                  DDEV_VERSION: v1.19.1
+                  DDEV_VERSION: v1.19.3
                 run: |
                   # @see https://ddev.readthedocs.io/en/stable/#installationupgrade-script-linux-and-macos-armarm64-and-amd64-architectures
                   sudo apt-get -qq update
@@ -50,6 +50,10 @@ jobs:
                 run: |
                     echo "M2_VERSION_CODE=$(echo m${{ matrix.m2-version }} | sed 's/\.//g' )" >> $GITHUB_ENV
 
+            -   name: Set ELASTIC_INSTALL_STRING env for 2.3
+                if: startsWith(matrix.m2-version, '2.3')
+                run: echo "ELASTIC_INSTALL_STRING='--timezone=America/Chicago'" >> $GITHUB_ENV
+
             -   name: Set ELASTIC_INSTALL_STRING env for 2.4
                 if: startsWith(matrix.m2-version, '2.4')
                 run: echo "ELASTIC_INSTALL_STRING='--elasticsearch-host=elasticsearch'" >> $GITHUB_ENV
@@ -57,17 +61,23 @@ jobs:
             -   name: Start DDEV for ${{ matrix.m2-version }} with PHP ${{ matrix.php-version }}
                 run: |
                     cp .ddev/config_overrides/config.${{ env.M2_VERSION_CODE }}.yaml .ddev/config.${{ env.M2_VERSION_CODE }}.yaml
-                    cp .ddev/additional_docker_compose/docker-compose.crowdsec.yaml .ddev/docker-compose.crowdsec.yaml
                     sed -i -e 's/^php_version:.*/php_version: ${{ matrix.php-version }}/g' .ddev/config.${{ env.M2_VERSION_CODE }}.yaml
                     ddev start
+
+            -   name: Force allow plugin for 2.4.3
+                if: startsWith(matrix.m2-version, '2.4.3')
+                run: ddev composer config --global allow-plugins true -n
 
             -   name: Install Magento ${{ matrix.m2-version }} with PHP ${{ matrix.php-version }}
                 # We don't use "ddev composer" create as it restarts all containers
                 run: |
                     ddev composer config --global http-basic.repo.magento.com ${{ secrets.MAGENTO_MARKETPLACE_USERNAME }} ${{ secrets.MAGENTO_MARKETPLACE_PASSWORD }}
                     ddev exec composer create --repository=https://repo.magento.com/ magento/project-community-edition ${{ env.M2_VERSION_CODE }} ${{ matrix.m2-version }}
+                    ls -al ${{ env.M2_VERSION_CODE }}
                     cp -r ${{ env.M2_VERSION_CODE }}/. ${{ github.workspace }}
                     rm -rf ${{ env.M2_VERSION_CODE }}
+                    ls -al ${{ github.workspace }}
+                    ls -al ${{ github.workspace }}/bin
 
             -   name: Setup Magento ${{ matrix.m2-version }} with PHP ${{ matrix.php-version }}
                 run: |
@@ -85,8 +95,8 @@ jobs:
                                      --admin-password=admin123 \
                                      --language=en_US \
                                      --currency=USD \
-                                     --timezone=America/Chicago \
                                      --use-rewrites=1 \
+                                     --timezone=America/Chicago \
                                      ${{ env.ELASTIC_INSTALL_STRING }}
             -   name: Installation tests
                 run: |
