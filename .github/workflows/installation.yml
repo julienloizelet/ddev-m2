@@ -73,6 +73,10 @@ jobs:
                 if: startsWith(matrix.m2-version, '2.4.3')
                 run: ddev composer config --global allow-plugins true -n
 
+            -   name: Force allow plugin for 2.3.7
+                if: startsWith(matrix.m2-version, '2.3.7')
+                run: ddev composer config --global allow-plugins true -n
+
             -   name: Install Magento ${{ matrix.m2-version }} with PHP ${{ matrix.php-version }}
                 # We don't use "ddev composer" create as it restarts all containers
                 run: |
