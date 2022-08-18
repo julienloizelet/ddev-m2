@@ -5,6 +5,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [2.3.0] - 2022-08-18
+
+### Added
+- Add `portainer` service
+- Add `2.3.1`, `2.3.2`, `2.3.4`, `2.3.6`, `2.3.7`, `2.4.1` and `2.4.5` configs
+
+### Changed
+- Change DDEV compatibility by using `1.21.1` ddev version
+
+
 ## [2.2.0] - 2022-07-05
 
 ### Added
