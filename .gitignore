@@ -28,10 +28,12 @@
 /docker-compose.varnish.yaml
 /docker-compose.crowdsec.yaml
 /docker-compose.playwright.yaml
+/docker-compose.portainer.yaml
 
 # Varnish
 /varnish/default.vcl
 
-# PHP
-/php/*.ini
+# Portainer
+/portainer-data/*
+
 
