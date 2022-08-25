@@ -14,6 +14,9 @@ use_dns_when_possible: true
 composer_version: ""
 web_environment: []
 disable_settings_management: true
+hooks:
+  post-start:
+    - exec: bash .ddev/custom_scripts/check-ddev-version.sh
 
 
 # This config.yaml was created with ddev version v1.17.6
