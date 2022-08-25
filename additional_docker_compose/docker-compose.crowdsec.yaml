@@ -10,10 +10,11 @@ services:
       com.ddev.approot: $DDEV_APPROOT
     volumes:
       - ".:/mnt/ddev_config"
+      - ./custom_files/crowdsec/cfssl:/tmp/cfssl
+      - ./custom_files/crowdsec/custom-config.yaml:/etc/crowdsec/config.yaml.local
+      - ./custom_files/crowdsec/custom-local-api-credentials.yaml:/etc/crowdsec/local_api_credentials.yaml.local
     environment:
       - DISABLE_AGENT=true
-      - VIRTUAL_HOST=$DDEV_HOSTNAME
-      - HTTP_EXPOSE=8080:8080
     ports:
       - "8080"
   web:
