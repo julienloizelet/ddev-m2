@@ -47,7 +47,7 @@ rm install_ddev.sh
 
 ### Prepare DDEV Magento 2 environment
 
-The final structure of the project will look like below.
+The structure of the project will look like below.
 
 ```
 m2-sources
@@ -55,16 +55,8 @@ m2-sources
 │ (Magento 2 sources installed with composer)    
 │
 └───.ddev
-│   │   
-│   │ (Cloned sources of this repo)
-│   
-└───my-own-modules (only if you want to test some of your module(s))
     │   
-    │
-    └───yourVendorName-yourModuleName
-       │   
-       │ (Sources of a module)
-         
+    │ (Cloned sources of this repo)
 ```
 
 - Create an empty folder that will contain all necessary sources:
@@ -129,6 +121,43 @@ This should take ages.
 ## Usage
 
 ### Test your own module
+
+There are at least two ways to handle the source code of a custom Magento 2 module:
+- use the `app/code` folder
+- use composer and its `vendor` folder
+
+
+Please read [this post](https://gist.github.com/Vinai/a94f2500cc5694a258620bbd30692b87) from Vinai Kopp to have an 
+idea of the pros and cons of each approach.
+
+As I mainly develop extension as an "extension vendor" developer (and not a "merchant" developer), I chose the 
+composer way. Furthermore, as explained in this [Yireo article](https://www.yireo.com/blog/2019-05-10-local-composer-development-with-magento2) (see the "My approach: Use composer paths" part), I am 
+using a composer local path that I will call `my-own-modules/yourVendorName-yourModuleName` and I put my module 
+sources inside it.
+
+Thus, the final structure of the project will look like below.
+
+```
+m2-sources
+│   
+│ (Magento 2 sources installed with composer)    
+│
+└───.ddev
+│   │   
+│   │ (Cloned sources of this repo)
+│   
+└───my-own-modules
+    │   
+    │
+    └───yourVendorName-yourModuleName
+       │   
+       │ (Sources of a module)
+         
+```
+
+You can choose the better way for you, depending on your needs. But if you make the same choice as me, here is what 
+you can do:
+
 
 ```
 cd m2-sources

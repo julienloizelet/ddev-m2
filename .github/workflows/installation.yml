@@ -1,113 +1,126 @@
 name: Magento 2 Installation
 on:
-    push:
-        branches:
-            - master
-    workflow_dispatch:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+permissions:
+  contents: read
 
 jobs:
-    installation:
-        strategy:
-            fail-fast: false
-            matrix:
-              # First and last patch for the current and previous minor, greatest php version
-              m2-version: [ "2.3.0", "2.3.7", "2.4.0", "2.4.5" ]
-              php-version: [ "7.2", "7.4", "8.1" ]
-              exclude:
-                - { php-version: "7.4", m2-version: "2.3.0" }
-                - { php-version: "8.1", m2-version: "2.3.0" }
-                - { php-version: "7.2", m2-version: "2.3.7" }
-                - { php-version: "8.1", m2-version: "2.3.7" }
-                - { php-version: "7.2", m2-version: "2.4.0" }
-                - { php-version: "8.1", m2-version: "2.4.0" }
-                - { php-version: "7.2", m2-version: "2.4.5" }
-                - { php-version: "7.4", m2-version: "2.4.5" }
+  installation:
+    strategy:
+      fail-fast: false
+      matrix:
+        # First and last patch for the current and previous minor, greatest php version
+        m2-version: [ "2.3.0", "2.3.7", "2.4.0", "2.4.5" ]
+        php-version: [ "7.2", "7.4", "8.1" ]
+        exclude:
+          - { php-version: "7.4", m2-version: "2.3.0" }
+          - { php-version: "8.1", m2-version: "2.3.0" }
+          - { php-version: "7.2", m2-version: "2.3.7" }
+          - { php-version: "8.1", m2-version: "2.3.7" }
+          - { php-version: "7.2", m2-version: "2.4.0" }
+          - { php-version: "8.1", m2-version: "2.4.0" }
+          - { php-version: "7.2", m2-version: "2.4.5" }
+          - { php-version: "7.4", m2-version: "2.4.5" }
 
-        name: Magento 2 Installation
-        runs-on: ubuntu-latest
-        permissions:
-          contents: read
+    name: Magento 2 Installation
+    runs-on: ubuntu-latest
 
-        steps:
+    steps:
 
-            -   name: Clone DDEV files
-                uses: actions/checkout@v2
-                with:
-                    path: .ddev
+      - name: Clone DDEV files
+        uses: actions/checkout@v2
+        with:
+          path: .ddev
 
-            -   name: Install DDEV
-                env:
-                  DDEV_VERSION: v1.21.1
-                run: |
-                  # @see https://ddev.readthedocs.io/en/stable/#installationupgrade-script-linux-and-macos-armarm64-and-amd64-architectures
-                  sudo apt-get -qq update
-                  sudo apt-get -qq -y install libnss3-tools
-                  curl -LO https://raw.githubusercontent.com/drud/ddev/master/scripts/install_ddev.sh
-                  bash install_ddev.sh ${{env.DDEV_VERSION}}
-                  ddev config global --instrumentation-opt-in=false --omit-containers=dba,ddev-ssh-agent
-                  rm install_ddev.sh
+      - name: Install DDEV
+        env:
+          DDEV_VERSION: v1.21.1
+        run: |
+          # @see https://ddev.readthedocs.io/en/stable/#installationupgrade-script-linux-and-macos-armarm64-and-amd64-architectures
+          sudo apt-get -qq update
+          sudo apt-get -qq -y install libnss3-tools
+          curl -LO https://raw.githubusercontent.com/drud/ddev/master/scripts/install_ddev.sh
+          bash install_ddev.sh ${{env.DDEV_VERSION}}
+          ddev config global --instrumentation-opt-in=false --omit-containers=dba,ddev-ssh-agent
+          rm install_ddev.sh
 
-            -   name: Set M2_VERSION_CODE env
-                # used in some directory path and conventional file naming
-                # Example : 2.4.2 => m242
-                run: |
-                    echo "M2_VERSION_CODE=$(echo m${{ matrix.m2-version }} | sed 's/\.//g' )" >> $GITHUB_ENV
+      - name: Set M2_VERSION_CODE env
+        # used in some directory path and conventional file naming
+        # Example : 2.4.2 => m242
+        run: |
+          echo "M2_VERSION_CODE=$(echo m${{ matrix.m2-version }} | sed 's/\.//g' )" >> $GITHUB_ENV
 
-            -   name: Set ELASTIC_INSTALL_STRING env for 2.3
-                if: startsWith(matrix.m2-version, '2.3')
-                run: echo "ELASTIC_INSTALL_STRING=" >> $GITHUB_ENV
+      - name: Set ELASTIC_INSTALL_STRING env for 2.3
+        if: startsWith(matrix.m2-version, '2.3')
+        run: echo "ELASTIC_INSTALL_STRING=" >> $GITHUB_ENV
 
-            -   name: Set ELASTIC_INSTALL_STRING env for 2.4
-                if: startsWith(matrix.m2-version, '2.4')
-                run: echo "ELASTIC_INSTALL_STRING=--elasticsearch-host=elasticsearch" >> $GITHUB_ENV
+      - name: Set ELASTIC_INSTALL_STRING env for 2.4
+        if: startsWith(matrix.m2-version, '2.4')
+        run: echo "ELASTIC_INSTALL_STRING=--elasticsearch-host=elasticsearch" >> $GITHUB_ENV
 
-            -   name: Start DDEV for ${{ matrix.m2-version }} with PHP ${{ matrix.php-version }}
-                run: |
-                    cp .ddev/config_overrides/config.${{ env.M2_VERSION_CODE }}.yaml .ddev/config.${{ env.M2_VERSION_CODE }}.yaml
-                    sed -i -e 's/^php_version:.*/php_version: ${{ matrix.php-version }}/g' .ddev/config.${{ env.M2_VERSION_CODE }}.yaml
-                    ddev start
+      - name: Start DDEV for ${{ matrix.m2-version }} with PHP ${{ matrix.php-version }}
+        run: |
+          cp .ddev/config_overrides/config.${{ env.M2_VERSION_CODE }}.yaml .ddev/config.${{ env.M2_VERSION_CODE }}.yaml
+          sed -i -e 's/^php_version:.*/php_version: ${{ matrix.php-version }}/g' .ddev/config.${{ env.M2_VERSION_CODE }}.yaml
+          ddev start
 
-            -   name: Force allow plugin for 2.4.3
-                if: startsWith(matrix.m2-version, '2.4.3')
-                run: ddev composer config --global allow-plugins true -n
+      - name: Set COMPOSER_VERSION env
+        run: echo "COMPOSER_VERSION=$(ddev exec composer -V | grep -oP "([0-9]{1,}\.)([0-9]{1,}\.)([0-9]{1,})(-(alpha|beta)\.[0-9]{1,})?" )" >> $GITHUB_ENV
 
-            -   name: Force allow plugin for 2.3.7
-                if: startsWith(matrix.m2-version, '2.3.7')
-                run: ddev composer config --global allow-plugins true -n
+      - name: Create Magento ${{ matrix.m2-version }} with PHP ${{ matrix.php-version }} project
+        # We don't use "ddev composer" create as it restarts all containers
+        run: |
+          ddev composer config --global http-basic.repo.magento.com ${{ secrets.MAGENTO_MARKETPLACE_USERNAME }} ${{ secrets.MAGENTO_MARKETPLACE_PASSWORD }}
+          ddev exec composer create --repository=https://repo.magento.com/ magento/project-community-edition ${{ env.M2_VERSION_CODE }} ${{ matrix.m2-version }} --no-install
+          cp -r ${{ env.M2_VERSION_CODE }}/. ${{ github.workspace }}
+          rm -rf ${{ env.M2_VERSION_CODE }}
 
-            -   name: Install Magento ${{ matrix.m2-version }} with PHP ${{ matrix.php-version }}
-                # We don't use "ddev composer" create as it restarts all containers
-                run: |
-                    ddev composer config --global http-basic.repo.magento.com ${{ secrets.MAGENTO_MARKETPLACE_USERNAME }} ${{ secrets.MAGENTO_MARKETPLACE_PASSWORD }}
-                    ddev exec composer create --repository=https://repo.magento.com/ magento/project-community-edition ${{ env.M2_VERSION_CODE }} ${{ matrix.m2-version }}
-                    ls -al ${{ env.M2_VERSION_CODE }}
-                    cp -r ${{ env.M2_VERSION_CODE }}/. ${{ github.workspace }}
-                    rm -rf ${{ env.M2_VERSION_CODE }}
-                    ls -al ${{ github.workspace }}/bin
+      - name: Fixup Composer Plugins
+        if: ${{ startsWith(env.COMPOSER_VERSION, '2') }}
+        run: |
+          ddev composer config --no-interaction allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
+          ddev composer config --no-interaction allow-plugins.laminas/laminas-dependency-plugin true
+          ddev composer config --no-interaction allow-plugins.magento/* true
 
-            -   name: Setup Magento ${{ matrix.m2-version }} with PHP ${{ matrix.php-version }}
-                run: |
-                    ddev magento setup:install \
-                                     --base-url=https://${{ env.M2_VERSION_CODE }}.ddev.site \
-                                     --db-host=db \
-                                     --db-name=db \
-                                     --db-user=db \
-                                     --db-password=db \
-                                     --backend-frontname=admin \
-                                     --admin-firstname=admin \
-                                     --admin-lastname=admin \
-                                     --admin-email=admin@admin.com \
-                                     --admin-user=admin \
-                                     --admin-password=admin123 \
-                                     --language=en_US \
-                                     --currency=USD \
-                                     --use-rewrites=1 \
-                                     --timezone=America/Chicago \
-                                     ${{ env.ELASTIC_INSTALL_STRING }}
-            -   name: Installation tests
-                run: |
-                    ddev magento setup:upgrade
-                    ddev magento setup:static-content:deploy -f
-                    ddev magento setup:di:compile
-                    ddev magento deploy:mode:set production
-                    ddev magento indexer:reindex
+      - name: Fixup Monolog
+        # @see https://github.com/magento/magento2/pull/35596
+        if: contains(fromJson('["2.4.4"]'),matrix.m2-version)
+        run: ddev composer require monolog/monolog:"<2.7.0" --no-update
+
+      - name: Install composer 1 plugin for parallel downloads
+        run: ddev composer global require hirak/prestissimo
+        if: ${{ startsWith(env.COMPOSER_VERSION, '1') }}
+
+      - name: Install Magento
+        run: ddev exec composer install
+
+      - name: Setup Magento ${{ matrix.m2-version }} with PHP ${{ matrix.php-version }}
+        run: |
+          ddev magento setup:install \
+                           --base-url=https://${{ env.M2_VERSION_CODE }}.ddev.site \
+                           --db-host=db \
+                           --db-name=db \
+                           --db-user=db \
+                           --db-password=db \
+                           --backend-frontname=admin \
+                           --admin-firstname=admin \
+                           --admin-lastname=admin \
+                           --admin-email=admin@admin.com \
+                           --admin-user=admin \
+                           --admin-password=admin123 \
+                           --language=en_US \
+                           --currency=USD \
+                           --use-rewrites=1 \
+                           --timezone=America/Chicago \
+                           ${{ env.ELASTIC_INSTALL_STRING }}
+
+      - name: Installation tests
+        run: |
+          ddev magento setup:upgrade
+          ddev magento setup:static-content:deploy -f
+          ddev magento setup:di:compile
+          ddev magento deploy:mode:set production
+          ddev magento indexer:reindex
