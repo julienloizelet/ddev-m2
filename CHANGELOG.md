@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [2.4.0] - 2022-08-25
+
+### Added
+- Add `DDEV_EXPECTED_VERSION.txt` file with post-hook to compare current and expected DDEV version
+
+### Changed
+- Change `crowdsec` service to use https and TLS authorization
+
 ## [2.3.0] - 2022-08-18
 
 ### Added
