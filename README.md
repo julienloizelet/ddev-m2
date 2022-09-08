@@ -11,7 +11,7 @@ The purpose of this repo is to share my Magento 2 [DDEV](https://ddev.readthedoc
 **Table of Contents**
 
 - [Quick start](#quick-start)
-  - [DDEV-Local installation](#ddev-local-installation)
+  - [DDEV installation](#ddev-installation)
   - [Prepare DDEV Magento 2 environment](#prepare-ddev-magento-2-environment)
   - [Magento 2 installation](#magento-2-installation)
   - [Set up Magento 2](#set-up-magento-2)
