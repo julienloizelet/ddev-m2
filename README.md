@@ -1,8 +1,9 @@
-# DDEV-Local stack for Magento 2
+# DDEV stack for Magento 2
 
-[![Magento 2 Installation](https://github.com/julienloizelet/ddev-m2/actions/workflows/installation.yml/badge.svg?event=push)](https://github.com/julienloizelet/ddev-m2/actions/workflows/installation.yml)
+[![Version](https://img.shields.io/github/v/release/julienloizelet/ddev-m2?include_prereleases)](https://github.com/julienloizelet/ddev-m2/releases)
+[![Magento 2 Installation](https://github.com/julienloizelet/ddev-m2/actions/workflows/installation.yml/badge.svg)](https://github.com/julienloizelet/ddev-m2/actions/workflows/installation.yml)
 
-The purpose of this repo is to share my Magento 2 [DDEV-Local](https://ddev.readthedocs.io/en/stable/) stack.
+The purpose of this repo is to share my Magento 2 [DDEV](https://ddev.readthedocs.io/en/stable/) stack.
 
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -32,7 +33,7 @@ The purpose of this repo is to share my Magento 2 [DDEV-Local](https://ddev.read
 _We will suppose that you want to test on a Magento 2.4.3 instance. Change the version number if you prefer another
 release._
 
-### DDEV-Local installation
+### DDEV installation
 
 This project is fully compatible with DDEV 1.21.1, and it is recommended to use this specific version.
 For the DDEV installation, please follow the [official instructions](https://ddev.readthedocs.io/en/stable/#installation).

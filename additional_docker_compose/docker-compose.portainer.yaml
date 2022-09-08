@@ -18,6 +18,4 @@ services:
       - ./portainer-data:/data
     environment:
       - VIRTUAL_HOST=$DDEV_HOSTNAME
-      - HTTP_EXPOSE=9000:9000
-    ports:
-      - "9000"
+      - HTTP_EXPOSE=9100:9000
