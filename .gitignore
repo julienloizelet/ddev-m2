@@ -19,7 +19,6 @@
 /db_snapshots
 /import-db
 /import.yaml
-/nginx_full/nginx-site.conf
 /sequelpro.spf
 /**/README.*
 !/README.md
@@ -36,5 +35,8 @@
 
 # Portainer
 /portainer-data/*
+
+#Nginx snippet
+/nginx/*.conf
 
 
