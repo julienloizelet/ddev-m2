@@ -1,0 +1,20 @@
+version: '3.6'
+services:
+  selenium:
+    image: selenium/standalone-chrome:105.0
+    container_name: ddev-${DDEV_SITENAME}-selenium
+    hostname: ${DDEV_SITENAME}-selenium
+    # These labels ensure this service is discoverable by ddev.
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    environment:
+      - SE_NODE_MAX_SESSIONS=5
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+    ports:
+      - "4444"
+    external_links:
+      - ddev-router:${DDEV_HOSTNAME}
+  web:
+    links:
+      - selenium:selenium

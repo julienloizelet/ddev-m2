@@ -29,6 +29,7 @@
 /docker-compose.crowdsec.yaml
 /docker-compose.playwright.yaml
 /docker-compose.portainer.yaml
+/docker-compose.selenium.yaml
 
 # Varnish
 /varnish/default.vcl
