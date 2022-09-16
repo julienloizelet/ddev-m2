@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.5.0](https://github.com/julienloizelet/ddev-m2/releases/tag/v2.5.0) - 2022-09-16
 [_Compare with previous release_](https://github.com/julienloizelet/ddev-m2/compare/v2.4.1...v2.5.0)
 
+### Changed
+- Use custom nginx configuration file to handle MFTF tests
+
 ### Added
 - Add `selenium` docker-compose file for `MFTF`
 - Add `MFTF` default settings files
