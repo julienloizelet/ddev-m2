@@ -18,8 +18,8 @@ if [[ $CURRENT == $EXPECTED ]]
 then
   echo -en "${txtgrn}${check_mark} DDEV version is as expected: $CURRENT ${txtrst} \n"
 else
-  echo -e "${txtred}=========================="
+  echo -e "${bldylw}=========================="
   echo -e "> WARNING!!!"
   echo -e "==========================${txtrst}"
-  echo -en "${txtred}${cross_mark} DDEV version ($CURRENT) is not the expected one: $EXPECTED ${txtrst} \n"
+  echo -en "${bldylw}${cross_mark} DDEV version ($CURRENT) is not the expected one: $EXPECTED ${txtrst} \n"
 fi

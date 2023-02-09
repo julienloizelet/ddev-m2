@@ -79,17 +79,6 @@ jobs:
               exit 1
           fi
 
-          README_VERSION_2=$(grep -oP "^bash install_ddev.sh v\K(.*)$" README.md)
-          if [[ $README_VERSION_2 == $EXPECTED_VERSION ]]
-          then
-              echo "README VERSION 2 OK"
-          else
-              echo "README VERSION 2 KO"
-              echo $README_VERSION_2
-              echo $EXPECTED_VERSION
-              exit 1
-          fi
-
       - name: Create Tag ${{ github.event.inputs.tag_name }}
         uses: actions/github-script@v3
         with:

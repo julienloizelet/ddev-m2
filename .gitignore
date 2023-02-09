@@ -29,6 +29,7 @@
 /docker-compose.playwright.yaml
 /docker-compose.portainer.yaml
 /docker-compose.selenium.yaml
+/docker-compose.redis-commander.yaml
 
 # Varnish
 /varnish/default.vcl

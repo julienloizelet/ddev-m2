@@ -8,7 +8,6 @@ services:
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: $DDEV_APPROOT
-    restart: unless-stopped
     security_opt:
       - no-new-privileges:true
     volumes:
