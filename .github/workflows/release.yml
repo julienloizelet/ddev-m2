@@ -39,7 +39,7 @@ jobs:
           echo "VERSION_NUMBER=$(echo ${{ github.event.inputs.tag_name }} | sed 's/v//g' )" >> $GITHUB_ENV
 
       - name: Clone sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Check version ${{ env.VERSION_NUMBER }} consistency in CHANGELOG
         run: |
@@ -80,11 +80,11 @@ jobs:
           fi
 
       - name: Create Tag ${{ github.event.inputs.tag_name }}
-        uses: actions/github-script@v3
+        uses: actions/github-script@v6
         with:
           github-token: ${{ github.token }}
           script: |
-            github.git.createRef({
+            github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: "refs/tags/${{ github.event.inputs.tag_name }}",

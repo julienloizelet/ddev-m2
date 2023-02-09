@@ -214,7 +214,7 @@ ddev reload-vcl
 For information, here are the differences between the back office generated `default.vcl` and the `default.vcl` I use: 
 
 - I changed the probe url from `"/pub/health_check.php"` to `"/health_check.php"` as explained in the
-[official documentation](https://experienceleague.adobe.com/docs/commerce-operations/configuration-guide/cache/varnish/config-varnish-advanced.html?mt=false):
+[official documentation](https://experienceleague.adobe.com/docs/commerce-operations/configuration-guide/cache/config-varnish-advanced.html?lang=en):
 
 ```
  .probe = {
