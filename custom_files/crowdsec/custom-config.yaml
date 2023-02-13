@@ -1,3 +1,10 @@
+common:
+  daemonize: false
+  pid_dir: /var/run/
+  log_media: file
+  log_level: info
+  log_dir: /var/log/
+  working_dir: .
 api:
   server:
     tls:
