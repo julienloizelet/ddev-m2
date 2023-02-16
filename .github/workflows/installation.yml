@@ -92,6 +92,10 @@ jobs:
           ddev composer config --no-interaction allow-plugins.laminas/laminas-dependency-plugin true
           ddev composer config --no-interaction allow-plugins.magento/* true
 
+      - name: Fixup Composer version audit plugin
+        run: |
+          ddev composer config repositories.0 '{"type": "composer", "url":"https://repo.magento.com/",  "exclude": ["magento/composer-dependency-version-audit-plugin"]}'
+
       - name: Fixup Monolog
         # @see https://github.com/magento/magento2/pull/35596
         if: contains(fromJson('["2.4.4"]'),matrix.m2-version)
