@@ -35,7 +35,7 @@ release._
 
 ### DDEV installation
 
-This project is fully compatible with DDEV 1.21.4, and it is recommended to use this specific version.
+This project is fully compatible with DDEV 1.21.5, and it is recommended to use this specific version.
 For the DDEV installation, please follow the [official instructions](https://ddev.readthedocs.io/en/stable/#installation).
 
 ### Prepare DDEV Magento 2 environment

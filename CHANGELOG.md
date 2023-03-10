@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+
+## [2.8.0](https://github.com/julienloizelet/ddev-m2/releases/tag/v2.8.0) - 2023-03-10
+[_Compare with previous release_](https://github.com/julienloizelet/ddev-m2/compare/v2.7.1...v2.8.0)
+
+### Changed
+- Use ddev add-ons files for `redis` and `redis-commander`
+
+---
+
+
 ## [2.7.1](https://github.com/julienloizelet/ddev-m2/releases/tag/v2.7.1) - 2023-02-16
 [_Compare with previous release_](https://github.com/julienloizelet/ddev-m2/compare/v2.7.0...v2.7.1)
 
@@ -20,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add `cacheActions.php` script to run some actions for the `CrowdSec_Bouncer` extension
 
+---
 
 ## [2.6.0](https://github.com/julienloizelet/ddev-m2/releases/tag/v2.6.0) - 2023-02-09
 [_Compare with previous release_](https://github.com/julienloizelet/ddev-m2/compare/v2.5.0...v2.6.0)
