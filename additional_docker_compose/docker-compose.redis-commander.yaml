@@ -1,3 +1,5 @@
+#ddev-generated
+
 services:
   redis-commander:
     container_name: ddev-${DDEV_SITENAME}-redis-commander
@@ -21,4 +23,4 @@ services:
     depends_on:
       - redis
     healthcheck:
-      timeout: 10s
+      disable: true
