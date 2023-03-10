@@ -22,7 +22,8 @@
 /sequelpro.spf
 /**/README.*
 !/README.md
-traefik
+/traefik
+/providers
 
 # Additional docker-compose file
 /docker-compose.varnish.yaml
