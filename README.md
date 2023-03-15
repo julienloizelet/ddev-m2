@@ -3,7 +3,21 @@
 [![Version](https://img.shields.io/github/v/release/julienloizelet/ddev-m2?include_prereleases)](https://github.com/julienloizelet/ddev-m2/releases)
 [![Magento 2 Installation](https://github.com/julienloizelet/ddev-m2/actions/workflows/installation.yml/badge.svg)](https://github.com/julienloizelet/ddev-m2/actions/workflows/installation.yml)
 
+
+
 The purpose of this repo is to share my Magento 2 [DDEV](https://ddev.readthedocs.io/en/stable/) stack.
+
+## This project is unmaintained
+
+This project is officially marked as unmaintained, since I am now using DDEV add-ons like: 
+
+- [My tools add-on](https://github.com/julienloizelet/ddev-tools)
+- [Redis add-on](https://github.com/ddev/ddev-redis)
+- [Memcached add-on](https://github.com/ddev/ddev-memcached)
+- [Elasticsearch add-on](https://github.com/ddev/ddev-elasticsearch)
+- [Varnish add-on](https://github.com/ddev/ddev-varnish)
+
+If you want to see how ddev add-ons can be used to test a Magento 2 module, take a look to my [GitHub action](https://github.com/julienloizelet/magento2-ddev-installation/) and their associated [workflow tests](https://github.com/julienloizelet/magento2-ddev-installation/tree/main/.github/workflows).
 
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
