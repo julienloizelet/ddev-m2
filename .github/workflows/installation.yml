@@ -15,17 +15,17 @@ jobs:
       fail-fast: false
       matrix:
         # First and last patch for the current and previous minor, greatest php version
-        m2-version: [ "2.3.0", "2.3.7", "2.4.0", "2.4.5" ]
-        php-version: [ "7.2", "7.4", "8.1" ]
+        m2-version: [ "2.3.0", "2.3.7", "2.4.0", "2.4.6" ]
+        php-version: [ "7.2", "7.4", "8.2" ]
         exclude:
           - { php-version: "7.4", m2-version: "2.3.0" }
-          - { php-version: "8.1", m2-version: "2.3.0" }
+          - { php-version: "8.2", m2-version: "2.3.0" }
           - { php-version: "7.2", m2-version: "2.3.7" }
-          - { php-version: "8.1", m2-version: "2.3.7" }
+          - { php-version: "8.2", m2-version: "2.3.7" }
           - { php-version: "7.2", m2-version: "2.4.0" }
-          - { php-version: "8.1", m2-version: "2.4.0" }
-          - { php-version: "7.2", m2-version: "2.4.5" }
-          - { php-version: "7.4", m2-version: "2.4.5" }
+          - { php-version: "8.2", m2-version: "2.4.0" }
+          - { php-version: "7.2", m2-version: "2.4.6" }
+          - { php-version: "7.4", m2-version: "2.4.6" }
 
     name: Magento 2 Installation
     runs-on: ubuntu-latest
@@ -66,7 +66,7 @@ jobs:
 
       - name: Set ELASTIC_INSTALL_STRING env for 2.4
         if: startsWith(matrix.m2-version, '2.4')
-        run: echo "ELASTIC_INSTALL_STRING=--elasticsearch-host=elasticsearch" >> $GITHUB_ENV
+        run: echo "ELASTIC_INSTALL_STRING=--elasticsearch-host=elasticsearch --search-engine=elasticsearch7" >> $GITHUB_ENV
 
       - name: Start DDEV for ${{ matrix.m2-version }} with PHP ${{ matrix.php-version }}
         run: |

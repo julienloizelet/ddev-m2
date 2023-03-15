@@ -5,12 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [2.8.0](https://github.com/julienloizelet/ddev-m2/releases/tag/v2.8.0) - 2023-03-??
+## [2.8.0](https://github.com/julienloizelet/ddev-m2/releases/tag/v2.8.0) - 2023-03-15
 [_Compare with previous release_](https://github.com/julienloizelet/ddev-m2/compare/v2.7.1...v2.8.0)
 
 ### Changed
 - Use ddev add-ons files for `redis` and `redis-commander`
-- Change DDEV compatibility by using `1.21.5` ddev version
+- Change DDEV compatibility by using `1.21.6` ddev version
 
 ### Added
 
